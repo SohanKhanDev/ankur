@@ -3,6 +3,7 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithPopup,
+  signOut,
 } from "firebase/auth";
 import React, { createContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.config";
@@ -25,6 +26,11 @@ const AuthProvider = ({ children }) => {
 
   const googleSignin = () => {
     return signInWithPopup(auth, googelProvider);
+  };
+
+  /*** ----------*** :: SIGNOUT :: ***---------- ***/
+  const logOut = () => {
+    return signOut(auth);
   };
 
   /*** ----------*** :: LOGIN/LOGOUT OBSERVER :: ***---------- ***/
@@ -55,6 +61,7 @@ const AuthProvider = ({ children }) => {
     initialLoading,
     setInitialLoading,
     googleSignin,
+    logOut,
   };
 
   return (

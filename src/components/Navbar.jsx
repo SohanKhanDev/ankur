@@ -1,6 +1,9 @@
-import React from "react";
+import React, { use } from "react";
 import { Link, useLocation } from "react-router";
 import logo from "../assets/logo.png";
+import profilePhoto from "../assets/profilePhoto.jpg";
+import { AuthContext } from "../providers/AuthProvide";
+import { toast } from "react-toastify";
 
 /*** ----------*** :: NAVLINKS => DESKTOP :: ***---------- ***/
 const navLinksLG = [
@@ -25,7 +28,21 @@ const navLinksSM = [
 ];
 
 const Navbar = () => {
+  const { user, setUser, logOut } = use(AuthContext);
+  console.log(user);
   const location = useLocation();
+
+  /*** ----------*** :: HANDLER => GOOGLE SIGNIN  :: ***---------- ***/
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        setUser(null);
+        toast.success("Signed out successfully! 🎉");
+      })
+      .catch((error) => {
+        toast.error(`Signout failed: ${error.message}`);
+      });
+  };
 
   return (
     <div className="bg-base-100 shadow-lg sticky top-0 z-50">
@@ -109,12 +126,33 @@ const Navbar = () => {
 
           {/* ----------*** :: RIGHT => BUTTON :: ***---------- */}
           <div className="navbar-end space-x-2 hidden lg:flex">
-            <Link to="/auth/login" className="btn btn-main">
-              Login
-            </Link>
-            <Link to="/auth/register" className="btn btn-main">
-              Register
-            </Link>
+            {/* ----------*** :: DYNAMIC LOGIN/LOGOUT :: ***---------- */}
+            {user ? (
+              <>
+                {/* ----------*** :: USER PROFILE PHOTO :: ***---------- */}
+                <Link to="/profile">
+                  <img
+                    src={user?.photoURL || profilePhoto}
+                    alt="Profile"
+                    className="h-10 w-10 rounded-full border-2 border-[#e67a37] shadow-md"
+                  />
+                </Link>
+
+                {/* ----------*** :: BTN => SIGNOUT :: ***---------- */}
+                <Link onClick={handleLogout} className="btn btn-main">
+                  Logout
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/auth/login" className="btn btn-main">
+                  Login
+                </Link>{" "}
+                <Link to="/auth/register" className="btn btn-main">
+                  Register
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>
