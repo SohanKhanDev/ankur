@@ -15,9 +15,10 @@
   themes: light --default;
 }
 
+
 /*** ----------*** :: BTN => MAIN :: ***---------- ***/
 .btn-main {
-  @apply relative inline-flex items-center justify-center px-6 py-2 text-white font-semibold rounded-xl transition-all duration-500 overflow-hidden bg-linear-to-br from-[#85a921] to-[#c1f52f];
+  @apply relative inline-flex items-center justify-center px-6 py-2 text-white font-semibold rounded-xl transition-all duration-500 overflow-hidden bg-linear-to-r from-[#f2ac27] to-[#e67a37];
 }
 
 .btn-main:hover {
