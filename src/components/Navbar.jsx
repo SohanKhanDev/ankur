@@ -1,5 +1,5 @@
 import React, { use } from "react";
-import { Link, useLocation } from "react-router";
+import { Link, NavLink, useLocation } from "react-router";
 import logo from "../assets/logo.png";
 import profilePhoto from "../assets/profilePhoto.jpg";
 import { AuthContext } from "../providers/AuthProvide";
@@ -81,14 +81,14 @@ const Navbar = () => {
                 {/* ----------*** :: NAVLINKS => MOBILE :: ***---------- */}
                 {navLinksSM.map((link) => (
                   <li key={link.id}>
-                    <Link
+                    <NavLink
                       to={link.path}
                       className={`${
                         location.pathname === link.path ? "active" : ""
                       }`}
                     >
                       {link.title}
-                    </Link>
+                    </NavLink>
                   </li>
                 ))}
               </ul>
@@ -99,14 +99,16 @@ const Navbar = () => {
               <ul className="menu menu-horizontal px-1">
                 {navLinksLG.map((link) => (
                   <li key={link.id}>
-                    <Link
+                    <NavLink
                       to={link.path}
-                      className={
-                        location.pathname === link.path ? "active" : ""
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-[#e67a37] font-semibold border-b-2 border-[#e67a37]"
+                          : "hover:text-[#e67a37] transition-all"
                       }
                     >
                       {link.title}
-                    </Link>
+                    </NavLink>
                   </li>
                 ))}
               </ul>

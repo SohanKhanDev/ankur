@@ -6,12 +6,19 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { IoLockClosedOutline, IoPersonOutline } from "react-icons/io5";
 import { MdOutlineAddPhotoAlternate, MdOutlineEmail } from "react-icons/md";
-import { AiFillEyeInvisible } from "react-icons/ai";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { toast } from "react-toastify";
 
 const RegisterPage = () => {
   /*** ----------*** :: HOOKS :: ***---------- ***/
-  const { setUser, actionLoading, googleSignin } = use(AuthContext);
+  const {
+    setUser,
+    actionLoading,
+    setActionLoading,
+    googleSignin,
+    createUser,
+    updateUser,
+  } = use(AuthContext);
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
 
@@ -32,6 +39,54 @@ const RegisterPage = () => {
   /*** ----------*** :: HANDLER => GITHUB SIGNIN  :: ***---------- ***/
   const handelGithubSignin = () => {
     toast.warning(`Github signup feature under development stage`);
+  };
+
+  /*** ----------*** :: HANDLER => EMAIL & PASSWORD SIGNUP  :: ***---------- ***/
+  const handelRegister = (e) => {
+    e.preventDefault();
+    setActionLoading(true);
+
+    /*** ----------*** :: GET VALUES FROM INPUT  :: ***---------- ***/
+    const name = e.target.name.value;
+    const photourl = e.target.photourl.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    /*** ----------*** :: PASSWORD VALIDATION  :: ***---------- ***/
+    const regExp =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+    if (!regExp.test(password)) {
+      toast.error("Password does not meet requirements");
+      setActionLoading(false);
+      return;
+    }
+
+    /*** ----------*** :: CREATE USER  :: ***---------- ***/
+    createUser(email, password)
+      .then((result) => {
+        const user = result.user;
+
+        /*** ----------*** :: UPDATE USER  :: ***---------- ***/
+        updateUser({ displayName: name, photoURL: photourl })
+          .then(() => {
+            setUser({ ...user, displayName: name, photoURL: photourl });
+            toast.success("User Created Successfully! 🎉");
+            navigate("/");
+          })
+          .catch((error) => {
+            toast.error(`Error setting profile info: ${error.message}`);
+          })
+          .finally(() => {
+            setActionLoading(false);
+          });
+      })
+      .catch((error) => {
+        toast.error(`Registration failed: ${error.message}`);
+      })
+      .finally(() => {
+        setActionLoading(false);
+      });
   };
 
   /*** ----------*** :: TITLE SETUP :: ***---------- ***/
@@ -64,13 +119,9 @@ const RegisterPage = () => {
 
         {/* ----------*** :: RIGHT SIDE :: ***---------- */}
         <div className="w-full lg:w-1/2 p-6 sm:p-8 md:p-12 flex flex-col justify-center items-center">
-          <form className="max-w-md w-full">
+          <form onSubmit={handelRegister} className="max-w-md w-full">
             <div className="mb-8 flex justify-center">
-              <img
-                src={logo}
-                alt="Kiddos Logo"
-                className="w-20 h-auto sm:w-50"
-              />
+              <img src={logo} alt="Logo" className="w-20 h-auto sm:w-50" />
             </div>
 
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6 text-center">
