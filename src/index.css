@@ -14,3 +14,21 @@
 @plugin "daisyui" {
   themes: light --default;
 }
+
+/*** ----------*** :: BTN => MAIN :: ***---------- ***/
+.btn-main {
+  @apply relative inline-flex items-center justify-center px-6 py-2 text-white font-semibold rounded-xl transition-all duration-500 overflow-hidden bg-linear-to-br from-[#85a921] to-[#c1f52f];
+}
+
+.btn-main:hover {
+  @apply scale-[1.04];
+  background-position: right center;
+}
+
+.btn-main {
+  background-size: 200% auto;
+}
+
+.btn-main:focus-visible {
+  @apply ring-2 ring-emerald-400 ring-offset-2 ring-offset-white;
+}
