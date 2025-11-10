@@ -20,17 +20,95 @@ const RegisterPage = () => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
 
-  /*** ----------*** :: HANDLER => GOOGLE SIGNIN :: ***---------- ***/
+  /*** ----------*** :: CUSTOM ERROR MEASSAGE  :: ***---------- ***/
+  const getCustomErrorMessage = (error) => {
+    const errorCode = error?.code;
+    let customMessage;
+
+    /*** ----------*** :: REGISTRATION & SIGN-IN :: ***---------- ***/
+    if (errorCode === "auth/email-already-in-use") {
+      customMessage =
+        "This email is already registered. Please log in instead. 📧";
+    } else if (errorCode === "auth/weak-password") {
+      customMessage =
+        "The password is too weak. Please use a stronger combination (min 6 characters). 💪";
+    } else if (errorCode === "auth/invalid-email") {
+      customMessage =
+        "The email address format is invalid. Please check for typos. ❌";
+    } else if (
+      errorCode === "auth/wrong-password" ||
+      errorCode === "auth/user-not-found"
+    ) {
+      customMessage =
+        "Invalid email or password. Please check your credentials and try again. 🗝️";
+    } else if (errorCode === "auth/user-disabled") {
+      customMessage =
+        "This account has been disabled. Please contact support for assistance. 🚫";
+    } else if (errorCode === "auth/too-many-requests") {
+      customMessage =
+        "Too many failed login attempts. Please try again later. ⏲️";
+    } else if (errorCode === "auth/popup-closed-by-user") {
+      /*** ----------*** :: SOCIAL/POPUP SIGN-IN :: ***---------- ***/
+      customMessage =
+        "Sign-in was cancelled. The pop-up window was closed before completion. 😔";
+    } else if (errorCode === "auth/account-exists-with-different-credential") {
+      customMessage =
+        "This email is already registered using a different method (e.g., Google or Email/Password). Please use the original sign-in method. 🔄";
+    } else if (errorCode === "auth/cancelled-popup-request") {
+      customMessage =
+        "You initiated multiple sign-in pop-ups. Please wait a moment and try again. ⌚";
+    } else if (errorCode && errorCode.includes("network")) {
+      /*** ----------*** :: GENERAL/NETWORK ERRORS :: ***---------- ***/
+      customMessage =
+        "A network error occurred. Please check your connection and try again. 📶";
+    } else if (error?.message) {
+      customMessage = `An unexpected error occurred: ${error.message
+        .split("(")[0]
+        .trim()}. 😕`;
+    }
+
+    // 4. Final Fallback
+    else {
+      customMessage =
+        "An unknown error occurred during authentication. Please try again. ❓";
+    }
+
+    return customMessage;
+  };
+
+  /*** ----------*** :: HANDLER => GOOGLE SIGNIN  :: ***---------- ***/
   const handelGoogleSignin = () => {
     googleSignin()
       .then((result) => {
         const user = result.user;
         setUser(user);
-        toast.success("Google Signup Successfully! 🎉");
+
+        /*** ----------*** :: DB => POST USERS  :: ***---------- ***/
+        const userInfo = {
+          name: result.user.displayName,
+          email: result.user.email,
+          image: result.user.photoURL,
+        };
+
+        fetch("http://localhost:3000/users", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(userInfo),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.message === "exists") {
+              toast.success("Welcome back! 🎉");
+            } else {
+              toast.success("Registration successful! Welcome to Ankur! 🎉");
+              console.log("after save:", data);
+            }
+          });
         navigate("/");
       })
       .catch((error) => {
-        toast.error(`Registration failed: ${error.message}`);
+        const customMessage = getCustomErrorMessage(error);
+        toast.error(`Sign-in failed: ${customMessage}`);
       });
   };
 
@@ -63,22 +141,42 @@ const RegisterPage = () => {
       .then((result) => {
         const user = result.user;
 
-        /*** ----------*** :: UPDATE USER :: ***---------- ***/
+        /*** ----------*** :: DB => POST USERS  :: ***---------- ***/
+        const userInfo = {
+          name: user.displayName,
+          email: user.email,
+          image: user.photoURL,
+        };
+
+        fetch("http://localhost:3000/users", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(userInfo),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("after save:", data);
+            toast.success("Registration successful! Welcome to Ankur! 🎉");
+          });
+
+        /*** ----------*** :: UPDATE USER INFO :: ***---------- ***/
         updateUser({ displayName: name, photoURL: photourl })
           .then(() => {
             setUser({ ...user, displayName: name, photoURL: photourl });
-            toast.success("User Created Successfully! 🎉");
+            // toast.success("User Created Successfully! 🎉");
             navigate("/");
           })
           .catch((error) => {
-            toast.error(`Error setting profile info: ${error.message}`);
+            const customMessage = getCustomErrorMessage(error);
+            toast.error(`Update failed: ${customMessage}`);
           })
           .finally(() => {
             setActionLoading(false);
           });
       })
       .catch((error) => {
-        toast.error(`Registration failed: ${error.message}`);
+        const customMessage = getCustomErrorMessage(error);
+        toast.error(`Registration failed: ${customMessage}`);
       })
       .finally(() => {
         setActionLoading(false);
