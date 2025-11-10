@@ -100,11 +100,11 @@ const RegisterPage = () => {
         <div className="w-full lg:w-1/2 p-8 md:p-12 flex flex-col justify-center items-center">
           <div className="max-w-xs w-full">
             {/* ----------*** :: LOGO :: ***---------- */}
-            <div className="mb-10 text-center">
+            <div className="mb-3 md:mb-10 text-center">
               <img
                 src={logo}
                 alt="Logo"
-                className="w-20 h-auto sm:w-50 mx-auto mb-2"
+                className="w-40 h-auto sm:w-50 mx-auto"
               />
             </div>
 

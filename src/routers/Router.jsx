@@ -15,6 +15,7 @@ import AuthPage from "../pages/AuthPage";
 import ProfilePage from "../pages/ProfilePage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import ProfileEditPage from "../pages/ProfileEditPage.JSX";
+import PrivateRouteProvider from "../providers/PrivateRouteProvider";
 
 const router = createBrowserRouter([
   /*** ----------*** :: LAYOUT => HOMELAYOUT :: ***---------- ***/
@@ -28,22 +29,57 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
 
       /*** ----------*** :: PAGE => PROFILE :: ***---------- ***/
-      { path: "/profile", element: <ProfilePage /> },
+      {
+        path: "/profile",
+        element: (
+          <PrivateRouteProvider>
+            <ProfilePage />
+          </PrivateRouteProvider>
+        ),
+      },
 
       /*** ----------*** :: PAGE => PROFILE EDIT :: ***---------- ***/
-      { path: "/editprofile", element: <ProfileEditPage /> },
+      {
+        path: "/editprofile",
+        element: (
+          <PrivateRouteProvider>
+            <ProfileEditPage />
+          </PrivateRouteProvider>
+        ),
+      },
 
       /*** ----------*** :: PAGE => ALL CROPS :: ***---------- ***/
       { path: "/allcrops", element: <AllCropsPage /> },
 
       /*** ----------*** :: PAGE => ADD CROPS :: ***---------- ***/
-      { path: "/addcrops", element: <AddCropsPage /> },
+      {
+        path: "/addcrops",
+        element: (
+          <PrivateRouteProvider>
+            <AddCropsPage />
+          </PrivateRouteProvider>
+        ),
+      },
 
       /*** ----------*** :: PAGE => MY POSTS :: ***---------- ***/
-      { path: "/myposts", element: <MyPostsPage /> },
+      {
+        path: "/myposts",
+        element: (
+          <PrivateRouteProvider>
+            <MyPostsPage />
+          </PrivateRouteProvider>
+        ),
+      },
 
       /*** ----------*** :: PAGE => MY INTERESTS :: ***---------- ***/
-      { path: "/myinterests", element: <MyInterestsPage /> },
+      {
+        path: "/myinterests",
+        element: (
+          <PrivateRouteProvider>
+            <MyInterestsPage />
+          </PrivateRouteProvider>
+        ),
+      },
     ],
   },
 

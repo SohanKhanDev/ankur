@@ -7,7 +7,7 @@ const ErrorPage = () => {
   return (
     <div
       className="
-        min-h-screen flex flex-col items-center justify-center text-centerp-10 text-white bg-linear-to-r from-[#84ae32] to-[#658727]
+        min-h-screen flex flex-col items-center justify-center text-centerp-10 text-white bg-linear-to-r from-[#206a4b] to-[#658727]
       "
     >
       <div className="w-full max-w-sm mx-auto mb-10">

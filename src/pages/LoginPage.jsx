@@ -73,7 +73,7 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 sm:p-8 ">
       <div
-        className="flex w-full max-w-5xl h-[700px] bg-white shadow-xl rounded-2xl overflow-hidden custom-shadow
+        className="flex w-full max-w-5xl h-auto bg-white shadow-xl rounded-2xl overflow-hidden custom-shadow
         "
       >
         {/* ----------*** :: LEFT SIDE :: ***---------- */}
@@ -104,18 +104,22 @@ const LoginPage = () => {
         <div className="w-full lg:w-1/2 p-8 md:p-12 flex flex-col justify-center items-center">
           <div className="max-w-xs w-full">
             {/* ----------*** :: LOGO :: ***---------- */}
-            <div className="mb-10 text-center">
+            <div className="mb-3 md:mb-10 text-center">
               <img
                 src={logo}
                 alt="Logo"
-                className="w-20 h-auto sm:w-50 mx-auto mb-2"
+                className="w-40 h-auto sm:w-50 mx-auto mb-2"
               />
             </div>
+
+            <h2 className="text-3xl font-bold text-gray-800 mb-2 md:mb-6 text-center">
+              Login!!
+            </h2>
 
             {/* ----------*** :: FORM => LOGIN :: ***---------- */}
             <form onSubmit={handleLogin}>
               {/* ----------*** :: INPUT => EMAIL :: ***---------- */}
-              <div className="mb-4">
+              <div className="mb-2 md:mb-4">
                 <label
                   htmlFor="login-email"
                   className="text-sm text-gray-600 block mb-1"
@@ -159,7 +163,7 @@ const LoginPage = () => {
               </div>
 
               {/* ----------*** :: BTN => FORGOT PASSWORD :: ***---------- */}
-              <div className="text-right mb-6">
+              <div className="text-right md-2 md:mb-6">
                 <Link
                   onClick={handelForgotPassword}
                   className="text-sm text-[#2a875f] hover:underline"
@@ -179,7 +183,7 @@ const LoginPage = () => {
             </form>
 
             {/* ----------*** :: OR DIVIDER :: ***---------- */}
-            <div className="flex items-center my-6">
+            <div className="flex items-center my-2 md:my-6">
               <hr className="grow border-gray-200" />
               <span className="px-4 text-gray-400 text-sm font-medium">or</span>
               <hr className="grow border-gray-200" />

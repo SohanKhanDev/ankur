@@ -5,34 +5,35 @@ import profilePhoto from "../assets/profilePhoto.jpg";
 import { AuthContext } from "../providers/AuthProvide";
 import { toast } from "react-toastify";
 
-/*** ----------*** :: NAVLINKS => DESKTOP :: ***---------- ***/
-const navLinksLG = [
+/*** ----------*** :: NAVLINK (WITHOUT LOGIN):: ***---------- ***/
+const navLinksPublic = [
   { id: 1, title: "Home", path: "/" },
   { id: 2, title: "All Crops", path: "/allcrops" },
+];
+
+/*** ----------*** :: NAVLINK (WITH LOGIN):: ***---------- ***/
+const navLinksPrivate = [
   { id: 3, title: "Add Crops", path: "/addcrops" },
   { id: 4, title: "My Posts", path: "/myposts" },
   { id: 5, title: "My Interests", path: "/myinterests" },
   { id: 6, title: "Profile", path: "/profile" },
 ];
 
-/*** ----------*** :: NAVLINKS => MOBILE :: ***---------- ***/
-const navLinksSM = [
-  { id: 1, title: "Home", path: "/" },
-  { id: 2, title: "All Crops", path: "/allcrops" },
-  { id: 3, title: "Add Crops", path: "/addcrops" },
-  { id: 4, title: "My Posts", path: "/myposts" },
-  { id: 5, title: "My Interests", path: "/myinterests" },
-  { id: 6, title: "Profile", path: "/profile" },
+/*** ----------*** :: AUTH NAVLINK (SM) :: ***---------- ***/
+const navLinksAuth = [
   { id: 7, title: "Login", path: "/auth/login" },
   { id: 8, title: "Register", path: "/auth/register" },
 ];
 
+/*** ----------*** :: AUTH LOGOUT NAVLINK (SM) :: ***---------- ***/
+const navLinksAuthLogout = [{ id: 9, title: "Logout", path: "/auth/logout" }];
+
 const Navbar = () => {
+  /*** ----------*** :: HOOKS :: ***---------- ***/
   const { user, setUser, logOut } = use(AuthContext);
-  console.log(user);
   const location = useLocation();
 
-  /*** ----------*** :: HANDLER => GOOGLE SIGNIN  :: ***---------- ***/
+  /*** ----------*** :: HANDLER => LOGOUT :: ***---------- ***/
   const handleLogout = () => {
     logOut()
       .then(() => {
@@ -44,13 +45,19 @@ const Navbar = () => {
       });
   };
 
+  /*** ----------*** :: DYNAMIC NAVLINKS :: ***---------- ***/
+  const mobileNavLinks = [
+    ...navLinksPublic,
+    ...(user ? [...navLinksPrivate, ...navLinksAuthLogout] : navLinksAuth),
+  ];
+
+  const desktopNavLinks = [...navLinksPublic, ...(user ? navLinksPrivate : [])];
+
   return (
     <div className="bg-base-100 shadow-lg sticky top-0 z-50">
       <div className="container mx-auto">
         <div className="navbar">
-          {/* ----------*** :: LEFT => MENU :: ***---------- */}
           <div className="navbar-start">
-            {/* ----------*** :: MOBILE DROPDOWN :: ***---------- */}
             <div className="dropdown">
               <div
                 tabIndex={0}
@@ -72,32 +79,39 @@ const Navbar = () => {
                   />
                 </svg>
               </div>
-
-              {/* ----------*** :: LEFT SIDE :: ***---------- */}
+              {/* ----------*** :: SM NAVLINKS :: ***---------- */}
               <ul
                 tabIndex={-1}
                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-20 mt-3 w-52 p-2 shadow"
               >
-                {/* ----------*** :: NAVLINKS => MOBILE :: ***---------- */}
-                {navLinksSM.map((link) => (
+                {mobileNavLinks.map((link) => (
                   <li key={link.id}>
-                    <NavLink
-                      to={link.path}
-                      className={`${
-                        location.pathname === link.path ? "active" : ""
-                      }`}
-                    >
-                      {link.title}
-                    </NavLink>
+                    {link.title === "Logout" ? (
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left"
+                      >
+                        {link.title}
+                      </button>
+                    ) : (
+                      <NavLink
+                        to={link.path}
+                        className={
+                          location.pathname === link.path ? "active" : ""
+                        }
+                      >
+                        {link.title}
+                      </NavLink>
+                    )}
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* ----------*** :: NAVLINKS => DESKTOP :: ***---------- */}
+            {/* ----------*** :: LG NAVLINKS :: ***---------- */}
             <div className="hidden lg:flex">
               <ul className="menu menu-horizontal px-1">
-                {navLinksLG.map((link) => (
+                {desktopNavLinks.map((link) => (
                   <li key={link.id}>
                     <NavLink
                       to={link.path}
@@ -115,46 +129,53 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* ----------*** :: CENTER => LOGO :: ***---------- */}
-          <div className="navbar-center">
+          {/* ----------*** :: LG => LOGO :: ***---------- */}
+          <div className="navbar-center hidden lg:flex">
             <Link to="/">
               <img
                 src={logo}
                 alt="logo"
-                className="w-28 md:w-32 h-auto object-contain"
+                className="w-28 md:w-32 h-auto object-contain" // Restored desktop logo size
               />
             </Link>
           </div>
 
-          {/* ----------*** :: RIGHT => BUTTON :: ***---------- */}
-          <div className="navbar-end space-x-2 hidden lg:flex">
-            {/* ----------*** :: DYNAMIC LOGIN/LOGOUT :: ***---------- */}
-            {user ? (
-              <>
-                {/* ----------*** :: USER PROFILE PHOTO :: ***---------- */}
-                <Link to="/profile">
-                  <img
-                    src={user?.photoURL || profilePhoto}
-                    alt="Profile"
-                    className="h-10 w-10 rounded-full border-2 border-[#e67a37] shadow-md"
-                  />
-                </Link>
+          <div className="navbar-end space-x-2">
+            {/* ----------*** :: SM => LOGO :: ***---------- */}
+            <Link to="/" className="lg:hidden">
+              <img
+                src={logo}
+                alt="logo"
+                className="w-28 h-auto object-contain"
+              />
+            </Link>
 
-                {/* ----------*** :: BTN => SIGNOUT :: ***---------- */}
-                <Link onClick={handleLogout} className="btn btn-main">
-                  Logout
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link to="/auth/login" className="btn btn-main">
-                  Login
-                </Link>{" "}
-                <Link to="/auth/register" className="btn btn-main">
-                  Register
-                </Link>
-              </>
-            )}
+            {/* ----------*** :: USER PHOTO :: ***---------- */}
+            <div className="hidden lg:flex space-x-2">
+              {user ? (
+                <>
+                  <Link to="/profile">
+                    <img
+                      src={user?.photoURL || profilePhoto}
+                      alt="Profile"
+                      className="h-10 w-10 rounded-full border-2 border-[#e67a37] shadow-md"
+                    />
+                  </Link>
+                  <button onClick={handleLogout} className="btn btn-main">
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to="/auth/login" className="btn btn-main">
+                    Login
+                  </Link>
+                  <Link to="/auth/register" className="btn btn-main">
+                    Register
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>

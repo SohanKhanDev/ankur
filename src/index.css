@@ -18,7 +18,7 @@
 
 /*** ----------*** :: BTN => MAIN :: ***---------- ***/
 .btn-main {
-  @apply py-3 rounded-lg text-white font-semibold transition-all duration-300 shadow-lg bg-[#2a875f] hover:bg-[#206a4b]
+  @apply py-3 rounded-lg text-white font-semibold transition-all duration-300 shadow-lg bg-[#e67a37] hover:bg-[#d35507]
 }
 
 /*** ----------*** :: CUSTOM SHADOW :: ***---------- ***/
