@@ -49,7 +49,18 @@ const router = createBrowserRouter([
       },
 
       /*** ----------*** :: PAGE => ALL CROPS :: ***---------- ***/
-      { path: "/allcrops", element: <AllCropsPage /> },
+      {
+        path: "/allcrops",
+        element: <AllCropsPage />,
+        loader: () => fetch("http://localhost:3000/allCrops"),
+      },
+
+      /*** ----------*** :: PAGE => CROPS DETAILS :: ***---------- ***/
+      {
+        path: "/crops-details/:id",
+        element: <AllCropsPage />,
+        loader: () => fetch("http://localhost:3000/allCrops"),
+      },
 
       /*** ----------*** :: PAGE => ADD CROPS :: ***---------- ***/
       {

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import CropDeatilsPage from "./CropDeatilsPage";
 
 const HomePage = () => {
   /*** ----------*** :: TITLE SETUP :: ***---------- ***/
@@ -9,6 +10,7 @@ const HomePage = () => {
   return (
     <div>
       <h1>HomePage</h1>
+      <CropDeatilsPage></CropDeatilsPage>
     </div>
   );
 };
