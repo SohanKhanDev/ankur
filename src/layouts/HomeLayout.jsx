@@ -6,7 +6,7 @@ import { Outlet } from "react-router";
 
 const HomeLayout = () => {
   return (
-    <div className="main-font  bg-gray-100">
+    <div className="main-font  bg-[#f5f9f5]">
       <Navbar />
 
       <MyContainer>

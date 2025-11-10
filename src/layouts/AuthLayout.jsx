@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 
 const AuthLayout = () => {
   return (
-    <div className="main-font  bg-gray-100">
+    <div className="main-font  bg-[#f5f9f5]">
       <Navbar />
 
       <MyContainer>

@@ -18,18 +18,12 @@
 
 /*** ----------*** :: BTN => MAIN :: ***---------- ***/
 .btn-main {
-  @apply relative inline-flex items-center justify-center px-6 py-2 text-white font-semibold rounded-xl transition-all duration-500 overflow-hidden bg-linear-to-r from-[#f2ac27] to-[#e67a37];
+  @apply py-3 rounded-lg text-white font-semibold transition-all duration-300 shadow-lg bg-[#2a875f] hover:bg-[#206a4b]
 }
 
-.btn-main:hover {
-  @apply scale-[1.04];
-  background-position: right center;
-}
-
-.btn-main {
-  background-size: 200% auto;
-}
-
-.btn-main:focus-visible {
-  @apply ring-2 ring-emerald-400 ring-offset-2 ring-offset-white;
+/*** ----------*** :: CUSTOM SHADOW :: ***---------- ***/
+.custom-shadow {
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(229, 231, 235, 0.6);
 }

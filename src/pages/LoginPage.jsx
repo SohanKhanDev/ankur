@@ -1,12 +1,11 @@
 import React, { use, useEffect, useState } from "react";
 import logo from "../assets/logo.png";
+import imgage from "../assets/login-img.jpg";
 import { AuthContext } from "../providers/AuthProvide";
 import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa";
-import { MdOutlineEmail } from "react-icons/md";
-import { IoLockClosedOutline } from "react-icons/io5";
+// Removed unused icons for a cleaner look: FaGithub, MdOutlineEmail, IoLockClosedOutline
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Link, useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router"; // Use Link from react-router-dom
 import { toast } from "react-toastify";
 
 const LoginPage = () => {
@@ -30,11 +29,6 @@ const LoginPage = () => {
       .catch((error) => {
         toast.error(`Signin failed: ${error.message}`);
       });
-  };
-
-  /*** ----------*** :: HANDLER => GITHUB SIGNIN  :: ***---------- ***/
-  const handelGithubSignin = () => {
-    toast.warning(`Github signup feature under development stage`);
   };
 
   /*** ----------*** :: HANDLER => EMAIL & PASSWORD SIGNIN  :: ***---------- ***/
@@ -77,141 +71,143 @@ const LoginPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 sm:p-8">
-      <div className="flex w-full h-[800px] lg:h-[700px] max-w-6xl bg-white shadow-2xl rounded-xl overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center p-4 sm:p-8 ">
+      <div
+        className="flex w-full max-w-5xl h-[700px] bg-white shadow-xl rounded-2xl overflow-hidden custom-shadow
+        "
+      >
         {/* ----------*** :: LEFT SIDE :: ***---------- */}
+        <div
+          className="hidden lg:flex w-1/2 p-12 flex-col justify-center items-center  text-gray-800 relative rounded-l-2xl bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url(${imgage})`,
+          }}
+        >
+          <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 text-center shadow-md mt-90">
+            <h2 className="text-3xl font-bold mb-3 text-[#2a875f]">
+              Welcome Back
+            </h2>
+
+            <p className="text-base text-center max-w-sm leading-relaxed text-gray-600">
+              Glad to see you again! Log in to continue your journey with Ankur.
+            </p>
+          </div>
+
+          <div className="absolute bottom-10 flex space-x-2">
+            <span className="w-2 h-2 bg-[#2a875f] rounded-full"></span>
+            <span className="w-2 h-2 bg-gray-300 rounded-full"></span>
+            <span className="w-2 h-2 bg-gray-300 rounded-full"></span>
+          </div>
+        </div>
+
+        {/* ----------*** :: RIGHT SIDE :: ***---------- */}
         <div className="w-full lg:w-1/2 p-8 md:p-12 flex flex-col justify-center items-center">
-          <div className="max-w-md w-full">
-            <div className="mb-8 flex justify-center">
-              <img src={logo} alt="Logo" className="w-20 h-auto sm:w-50" />
-            </div>
-
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6 text-center">
-              Sign in to Ankur
-            </h1>
-
-            {/* ----------*** :: BTN => GOOGLE SIGNIN :: ***---------- */}
-            <div className="flex justify-center space-x-4 mb-6">
-              <button
-                onClick={handelGoogleSignin}
-                type="button"
-                disabled={actionLoading}
-                className="flex items-center justify-center w-12 h-12 rounded-full border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
-              >
-                <FcGoogle size={24} className="sm:size-29" />
-              </button>
-
-              {/* ----------*** :: BTN => GITHUB SIGNIN :: ***---------- */}
-              <button
-                onClick={handelGithubSignin}
-                type="button"
-                disabled={actionLoading}
-                className="flex items-center justify-center w-12 h-12 rounded-full border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
-              >
-                <FaGithub size={24} className="sm:size-29" />
-              </button>
-            </div>
-
-            <div className="flex items-center my-6">
-              <hr className="grow border-gray-300" />
-              <span className="px-4 text-gray-500 text-sm">
-                or use your email account:
-              </span>
-              <hr className="grow border-gray-300" />
+          <div className="max-w-xs w-full">
+            {/* ----------*** :: LOGO :: ***---------- */}
+            <div className="mb-10 text-center">
+              <img
+                src={logo}
+                alt="Logo"
+                className="w-20 h-auto sm:w-50 mx-auto mb-2"
+              />
             </div>
 
             {/* ----------*** :: FORM => LOGIN :: ***---------- */}
             <form onSubmit={handleLogin}>
               {/* ----------*** :: INPUT => EMAIL :: ***---------- */}
               <div className="mb-4">
-                <div className="relative flex items-center bg-gray-100 rounded-lg p-3 space-x-2">
-                  <MdOutlineEmail size={19} className="text-gray-400" />
-                  <input
-                    id="login-email"
-                    name="email"
-                    type="email"
-                    placeholder="Email"
-                    className="w-full bg-transparent focus:outline-none text-gray-700"
-                  />
-                </div>
+                <label
+                  htmlFor="login-email"
+                  className="text-sm text-gray-600 block mb-1"
+                >
+                  Email
+                </label>
+
+                <input
+                  id="login-email"
+                  name="email"
+                  type="email"
+                  placeholder="enter your email"
+                  className="w-full border-b border-gray-300 focus:border-[#2a875f] focus:outline-none p-2 text-gray-700 placeholder-gray-400 transition duration-150"
+                />
               </div>
 
               {/* ----------*** :: INPUT => PASSWORD :: ***---------- */}
-              <div className="mb-6 relative">
-                <div className="relative flex items-center bg-gray-100 rounded-lg p-3 space-x-2">
-                  <IoLockClosedOutline size={19} className="text-gray-400" />
-                  <input
-                    name="password"
-                    type={show ? "text" : "password"}
-                    placeholder="••••••••"
-                    className="w-full bg-transparent focus:outline-none text-gray-700"
-                  />
-                </div>
+              <div className="mb-2 relative">
+                <label className="text-sm text-gray-600 block mb-1">
+                  Password
+                </label>
+                <input
+                  id="login-password"
+                  name="password"
+                  type={show ? "text" : "password"}
+                  placeholder="••••••••"
+                  className="w-full border-b border-gray-300 focus:border-[#2a875f] focus:outline-none p-2 text-gray-700 placeholder-gray-400 transition duration-150"
+                />
 
                 {/* ----------*** :: BTN => EYE :: ***---------- */}
                 <span
                   onClick={() => setShow(!show)}
-                  className="absolute right-5 top-[15px] cursor-pointer z-50"
+                  className="absolute right-0 bottom-2.5 cursor-pointer text-gray-500 hover:text-[#2a875f]"
                 >
                   {show ? (
-                    <AiFillEye size={22} />
+                    <AiFillEye size={20} />
                   ) : (
-                    <AiFillEyeInvisible size={22} />
+                    <AiFillEyeInvisible size={20} />
                   )}
                 </span>
               </div>
 
               {/* ----------*** :: BTN => FORGOT PASSWORD :: ***---------- */}
-              <div className="text-sm text-right mb-8">
+              <div className="text-right mb-6">
                 <Link
                   onClick={handelForgotPassword}
-                  className="text-gray-600 hover:text-gray-800 hover:underline"
+                  className="text-sm text-[#2a875f] hover:underline"
                 >
-                  Forgot your password?
+                  Forgot password?
                 </Link>
               </div>
 
               {/* ----------*** :: BTN => SIGNIN :: ***---------- */}
               <button
                 disabled={actionLoading}
-                className={`w-full py-3 rounded-full text-white font-semibold transition-all duration-300 shadow-md ${
-                  actionLoading ? "bg-gray-400 cursor-not-allowed" : "btn-main"
-                }`}
+                className={`btn-main w-full
+                  ${actionLoading && "bg-gray-400 cursor-not-allowed"}`}
               >
-                {actionLoading ? "Signing In..." : "SIGN IN"}
+                {actionLoading ? "Signing In..." : "Sign in"}
               </button>
             </form>
 
-            {/* ----------*** :: BTN => SIGNUP (SM & MD) :: ***---------- */}
-            <div className="flex flex-col items-center lg:hidden mt-4 pt-4 border-t border-gray-200">
-              <p className="text-gray-500 text-sm mb-3">
-                Don't have an account?
-              </p>
-              <Link
-                to="/auth/register"
-                className="w-full py-3 rounded-full border-2 border-indigo-600 text-indigo-600 font-semibold text-center"
-              >
-                SIGN UP
-              </Link>
+            {/* ----------*** :: OR DIVIDER :: ***---------- */}
+            <div className="flex items-center my-6">
+              <hr className="grow border-gray-200" />
+              <span className="px-4 text-gray-400 text-sm font-medium">or</span>
+              <hr className="grow border-gray-200" />
             </div>
-          </div>
-        </div>
 
-        {/* --- Right Side --- */}
-        <div className="hidden lg:flex w-1/2 p-12 flex-col justify-center items-center text-white relative overflow-hidden rounded-r-xl bg-linear-to-r from-[#f2ac27] to-[#e67a37]">
-          <div className="relative z-10 text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Hello, Friend!
-            </h2>
-            <p className="text-lg mb-8 max-w-xs leading-relaxed">
-              Enter your personal details and start journey with us
-            </p>
-            <Link
-              to="/auth/register"
-              className="py-3 px-10 rounded-full border-2 border-white text-white font-semibold hover:bg-white hover:text-gray-800 transition-all duration-300"
+            {/* ----------*** :: BTN => GOOGLE SIGNIN :: ***---------- */}
+            <button
+              onClick={handelGoogleSignin}
+              type="button"
+              disabled={actionLoading}
+              className="flex items-center justify-center w-full py-2.5 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors shadow-sm"
             >
-              SIGN UP
-            </Link>
+              <FcGoogle size={24} className="mr-3" />
+              <span className="font-medium text-sm">Sign in with Google</span>
+            </button>
+
+            {/* ----------*** :: NAVIGATION => REGISTER :: ***---------- */}
+            <div className="text-center mt-6">
+              <p className="text-sm text-gray-600">
+                Are you new?{" "}
+                <Link
+                  to="/auth/register"
+                  className="font-medium text-[#2a875f] hover:underline"
+                >
+                  Create an Account
+                </Link>
+              </p>
+            </div>
           </div>
         </div>
       </div>
