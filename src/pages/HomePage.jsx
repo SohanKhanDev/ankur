@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import CropDeatilsPage from "./CropDeatilsPage";
 import Slider from "../components/Slider";
+import TestimonialsSlider from "../components/TestimonialsSlider";
 
 const HomePage = () => {
   /*** ----------*** :: TITLE SETUP :: ***---------- ***/
@@ -11,6 +12,7 @@ const HomePage = () => {
   return (
     <div>
       <Slider />
+      <TestimonialsSlider />
     </div>
   );
 };
