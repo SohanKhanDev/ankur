@@ -33,7 +33,6 @@ const CropDetailsPage = () => {
       );
       if (alreadyInterested) {
         setIsSubmitted(true);
-        console.log(crop);
       }
     }
   }, [user, crop]);
@@ -88,9 +87,58 @@ const CropDetailsPage = () => {
     setActionLoading(false);
   };
 
+  /*** ----------*** :: HANDLER => INTEREST ACCEPT  :: ***---------- ***/
+  const handleInterestAccept = (interestId) => {
+    const interest = crop.interests.find(
+      (interest) => interest._id === interestId
+    );
+    if (quantity < interest.quantity) {
+      return toast.error(`Insufficient Stock!!`);
+    }
+
+    fetch(`http://localhost:3000/interests/accept?interestId=${interestId}`, {
+      method: "PUT",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Interest accepted:", data);
+
+        setCrop((prevCrop) => ({
+          ...prevCrop,
+          // update stock
+          quantity: prevCrop.quantity - interest.quantity,
+          // update interest status
+          interests: prevCrop.interests.map((prev) =>
+            prev._id === interestId ? { ...prev, status: "Accepted" } : prev
+          ),
+        }));
+      })
+      .catch((error) => console.error("Error:", error));
+  };
+
+  /*** ----------*** :: HANDLER => INTEREST REJECT  :: ***---------- ***/
+  const handleInterestReject = (interestId) => {
+    fetch(`http://localhost:3000/interests/reject?interestId=${interestId}`, {
+      method: "PUT",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Interest rejected:", data);
+
+        setCrop((prevCrop) => ({
+          ...prevCrop,
+          interests: prevCrop.interests.map((prev) =>
+            prev._id === interestId ? { ...prev, status: "Rejected" } : prev
+          ),
+        }));
+      })
+      .catch((error) => console.error("Error:", error));
+  };
+
   return (
     <div className="flex justify-center bg-gray-50 min-h-screen p-8 font-sans">
       <div className="w-full max-w-7xl bg-white shadow-2xl rounded-xl p-8 md:p-12">
+        {/* ----------*** :: CROPS & INTEREST (TOP PART) :: ***---------- */}
         <div className="border-b border-black pb-9">
           {/* ----------*** :: CROP NAME :: ***---------- */}
           <div className="flex items-center mb-8 pb-4 border-b border-gray-100">
@@ -99,8 +147,8 @@ const CropDetailsPage = () => {
             </h1>
           </div>
 
-          {/* ----------*** :: LEFT SIDE :: ***---------- */}
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-30">
+            {/* ----------*** :: LEFT SIDE :: ***---------- */}
             <div className="lg:col-span-2 space-y-8">
               {/* ----------*** :: CROP PHOTO :: ***---------- */}
               <div className="relative h-60 bg-gray-100 rounded-xl overflow-hidden shadow-lg">
@@ -141,7 +189,7 @@ const CropDetailsPage = () => {
               </div>
             </div>
 
-            {/* ----------*** :: LEFT SIDE :: ***---------- */}
+            {/* ----------*** :: RIGHT SIDE :: ***---------- */}
             <div className="lg:col-span-2 h-full  bg-white p-6 shadow-xl rounded-xl border border-gray-100">
               <h2 className="text-2xl font-bold text-[#d35507] ">
                 Express Your Interest
@@ -230,6 +278,112 @@ const CropDetailsPage = () => {
                   </button>
                 </form>
               )}
+            </div>
+          </div>
+        </div>
+
+        {/* ----------*** :: EXISTING INTERESTS (MIDDLE PART) :: ***---------- */}
+        <div>
+          <div className="border-t pt-2">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-3">
+              Interests List
+            </h2>
+
+            {/* ----------*** :: TABULAR => INTEREST LIST :: ***---------- */}
+            <div className="overflow-x-auto">
+              <table className="table">
+                {/* ----------*** :: TABLE => HEADER :: ***---------- */}
+                <thead className="text-center">
+                  <tr>
+                    <th>Buyer Name</th>
+                    <th>Quantity</th>
+                    <th>Message</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+
+                {/* ----------*** :: TABLE => BODY :: ***---------- */}
+                <tbody className="text-center">
+                  {crop?.interests && crop.interests.length > 0 ? (
+                    crop.interests.map((interest, index) => (
+                      <tr key={index}>
+                        {/* ----------*** :: BUYER INFO:: ***---------- */}
+                        <td>
+                          <div className="flex items-center gap-3 uppercase">
+                            <div className="font-bold">{interest.userName}</div>
+                          </div>
+                        </td>
+
+                        {/* ----------*** :: QTY:: ***---------- */}
+                        <td>
+                          <span className="font-semibold text-gray-800 uppercase">
+                            {interest.quantity} {crop.unit}
+                          </span>
+                        </td>
+
+                        {/* ----------*** :: MESSAGE:: ***---------- */}
+                        <td className="text-gray-600 italic">
+                          {interest.message || "—"}
+                        </td>
+
+                        {/* ----------*** :: STATUS:: ***---------- */}
+                        <td>
+                          <span
+                            className={`px-3 py-1 rounded-full text-xs font-medium ${
+                              interest.status === "Pending"
+                                ? "bg-yellow-100 text-yellow-700"
+                                : interest.status === "Accepted"
+                                ? "bg-green-100 text-green-700"
+                                : "bg-red-100 text-red-700"
+                            }`}
+                          >
+                            {interest.status}
+                          </span>
+                        </td>
+
+                        {/* --- Action --- */}
+                        <td className="">
+                          {interest.status === "Pending" ? (
+                            <div className="flex gap-2  justify-center">
+                              <button
+                                onClick={() =>
+                                  handleInterestAccept(interest._id)
+                                }
+                                className="btn btn-xs bg-green-600 text-white hover:bg-green-700"
+                              >
+                                Accept
+                              </button>
+
+                              <button
+                                onClick={() =>
+                                  handleInterestReject(interest._id)
+                                }
+                                className="btn btn-xs bg-red-600 text-white hover:bg-red-700"
+                              >
+                                Reject
+                              </button>
+                            </div>
+                          ) : (
+                            <span className="text-gray-400 text-sm italic">
+                              No Action
+                            </span>
+                          )}
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td
+                        colSpan="5"
+                        className="text-center py-6 text-gray-500"
+                      >
+                        No interests submitted yet.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
