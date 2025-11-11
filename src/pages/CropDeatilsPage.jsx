@@ -1,227 +1,241 @@
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
+import { BiSolidCategoryAlt } from "react-icons/bi";
+import {
+  FaBox,
+  FaDollarSign,
+  FaEnvelope,
+  FaWeightHanging,
+  FaCheckCircle,
+} from "react-icons/fa";
+import { useLoaderData } from "react-router";
+import { AuthContext } from "../providers/AuthProvide";
+import { toast } from "react-toastify";
 
-// Reusing the inline SVG definitions for consistency and to avoid external package imports.
-// --- Inline SVG Icon Definitions ---
-const CategoryIcon = ({ size = 20, className = "text-gray-500" }) => (
-  <svg
-    className={className}
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <rect x="3" y="3" width="7" height="9" rx="1" ry="1"></rect>
-    <rect x="14" y="3" width="7" height="5" rx="1" ry="1"></rect>
-    <rect x="14" y="12" width="7" height="9" rx="1" ry="1"></rect>
-    <rect x="3" y="16" width="7" height="5" rx="1" ry="1"></rect>
-  </svg>
-);
+const CropDetailsPage = () => {
+  /*** ----------*** :: HOOKS :: ***---------- ***/
+  const data = useLoaderData();
 
-const BoxIcon = ({ size = 20, className = "text-white" }) => (
-  <svg
-    className={className}
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M12.68 18.25L21 14.12V5.88L12.68 1.75L4.36 5.88V14.12L12.68 18.25Z"></path>
-    <line x1="4.36" y1="5.88" x2="12.68" y2="10.01"></line>
-    <line x1="12.68" y1="10.01" x2="21" y2="5.88"></line>
-    <line x1="12.68" y1="10.01" x2="12.68" y2="18.25"></line>
-  </svg>
-);
+  const [crop, setCrop] = useState(data);
+  const { _id, description, image, name, pricePerUnit, quantity, type, unit } =
+    crop;
 
-const UnitIcon = ({ size = 20, className = "text-white" }) => (
-  <svg
-    className={className}
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <line x1="12" y1="2" x2="12" y2="22"></line>
-    <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
-    <line x1="4.93" y1="19.07" x2="19.07" y2="4.93"></line>
-  </svg>
-);
+  const { user, actionLoading, setActionLoading } = use(AuthContext);
 
-// Mock data structure, reflecting the props from CropsCard
-const MOCK_CROP_DATA = {
-  name: "Red Onion",
-  description:
-    "These are large, freshly harvested red onions known for their pungent aroma and sharp flavor. Ideal for salads, grilling, and deep frying. Organically grown on sustainable farms.",
-  longDescription:
-    "Sourced from the fertile lands of Jessore, our Red Onions are hand-picked at peak maturity to ensure maximum shelf life and flavor. They offer excellent nutritional value, rich in Vitamin C and Sulphur compounds. Store in a cool, dry place.",
-  image: "https://placehold.co/600x400/fff/374151?text=Product+Image", // Placeholder image
-  pricePerUnit: "85",
-  quantity: "420", // Available stock
-  type: "Vegetable",
-  unit: "KG",
-  details: [
-    { label: "Origin", value: "Local Farm" },
-    { label: "Shelf Life", value: "3 Weeks" },
-    { label: "Best Season", value: "Winter" },
-  ],
-};
+  const [interestQuantity, setInterestQuantity] = useState(1);
+  const [interestMessage, setInterestMessage] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-const CropDeatilsPage = ({ initialCrop = MOCK_CROP_DATA }) => {
-  const [crop] = useState(initialCrop);
-  const [selectedQuantity, setSelectedQuantity] = useState(1);
+  /*** ----------*** :: VALIDATION => INTEREST  :: ***---------- ***/
+  useEffect(() => {
+    if (user?.email && crop?.interests?.length > 0) {
+      const alreadyInterested = crop.interests.some(
+        (interest) => interest.userEmail === user.email
+      );
+      if (alreadyInterested) {
+        setIsSubmitted(true);
+        console.log(crop);
+      }
+    }
+  }, [user, crop]);
 
-  // Convert price to number and format
-  const price = parseFloat(crop.pricePerUnit);
-  const formattedPrice = price.toFixed(0);
-  const totalPrice = (price * selectedQuantity).toFixed(0);
+  /*** ----------*** :: CALCULATION => TOTAL PRICE  :: ***---------- ***/
+  const totalPrice = (interestQuantity * pricePerUnit).toFixed(2);
 
-  const handleQuantityChange = (change) => {
-    setSelectedQuantity((prev) => {
-      const newQty = prev + change;
-      return newQty > 0 ? newQty : 1; // Prevent quantity from going below 1
-    });
+  /*** ----------*** :: HANDLER => SUBMIT INTEREST  :: ***---------- ***/
+  const handleSubmitInterest = (e) => {
+    e.preventDefault();
+    setActionLoading(true);
+    setIsSubmitted(false);
+
+    /*** ----------*** :: VALIDATION => INTERESTED QTY  :: ***---------- ***/
+    if (quantity < interestQuantity) {
+      return toast.error("Interest Qty is Higher then Stock Qty");
+    }
+
+    /*** ----------*** :: DATABASE => POST => INTEREST  :: ***---------- ***/
+    const newInterest = {
+      cropId: _id,
+      userEmail: user.email,
+      userName: user.displayName,
+      quantity: interestQuantity,
+      message: interestMessage,
+      totalPrice,
+    };
+
+    fetch(`http://localhost:3000/interests/${_id}`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(newInterest),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("after insert:", data);
+        if (data.acknowledged) {
+          toast.success("Interest Submitted!! 🎉");
+          const addedInterest = {
+            ...newInterest,
+            _id: data.insertedId,
+            status: "Pending",
+          };
+
+          setCrop((prev) => ({
+            ...prev,
+            interests: [...(prev.interests || []), addedInterest],
+          }));
+          setIsSubmitted(true);
+        }
+      });
+    setActionLoading(false);
   };
 
   return (
     <div className="flex justify-center bg-gray-50 min-h-screen p-8 font-sans">
-      <div className="w-full max-w-6xl bg-white shadow-2xl rounded-xl p-8 md:p-12">
-        <div className="flex items-center mb-8 pb-4 border-b border-gray-100">
-          <h1 className="text-4xl font-extrabold text-gray-900 capitalize">
-            {crop.name} Details
-          </h1>
-        </div>
-
-        {/* Main Content Grid: Image (Left) & Details (Right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Image Column */}
-          <div className="relative h-96 bg-gray-100 rounded-xl overflow-hidden shadow-lg">
-            <img
-              src={crop.image}
-              alt={crop.name}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src =
-                  "https://placehold.co/600x400/f3f4f6/374151?text=Product+Image";
-              }}
-            />
+      <div className="w-full max-w-7xl bg-white shadow-2xl rounded-xl p-8 md:p-12">
+        <div className="border-b border-black pb-9">
+          {/* ----------*** :: CROP NAME :: ***---------- */}
+          <div className="flex items-center mb-8 pb-4 border-b border-gray-100">
+            <h1 className="text-4xl font-extrabold text-[#d35507] capitalize">
+              {name}
+            </h1>
           </div>
 
-          {/* Details Column */}
-          <div>
-            {/* Tags / Quick Info */}
-            <div className="flex flex-wrap gap-3 mb-6">
-              <span className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-gray-200 text-gray-700 rounded-lg capitalize">
-                <CategoryIcon size={20} className="text-gray-600" /> {crop.type}
-              </span>
-              <span className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-green-600 text-white rounded-lg">
-                <BoxIcon size={20} className="text-white" /> Stock:{" "}
-                {crop.quantity}
-              </span>
-              <span className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-amber-500 text-white rounded-lg uppercase">
-                <UnitIcon size={20} className="text-white" /> Unit: {crop.unit}
-              </span>
-            </div>
-
-            {/* Description */}
-            <h2 className="text-2xl font-semibold text-gray-800 mb-3">
-              Overview
-            </h2>
-            <p className="text-gray-600 mb-6 leading-relaxed border-b pb-6 border-gray-100">
-              {crop.description}
-            </p>
-
-            {/* Price and Quantity Selector */}
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-baseline gap-2">
-                <p className="text-5xl font-extrabold text-gray-900">
-                  {formattedPrice}
-                </p>
-                <p className="text-xl font-semibold text-gray-500">
-                  TK / {crop.unit.toUpperCase()}
-                </p>
+          {/* ----------*** :: LEFT SIDE :: ***---------- */}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-30">
+            <div className="lg:col-span-2 space-y-8">
+              {/* ----------*** :: CROP PHOTO :: ***---------- */}
+              <div className="relative h-60 bg-gray-100 rounded-xl overflow-hidden shadow-lg">
+                <img
+                  src={image}
+                  alt={name}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src =
+                      "https://placehold.co/600x400/f3f4f6/374151?text=Product+Image";
+                  }}
+                />
               </div>
 
-              {/* Quantity Selector */}
-              <div className="flex items-center border border-gray-300 rounded-xl overflow-hidden">
-                <button
-                  className="px-4 py-2 text-xl font-medium bg-gray-100 hover:bg-gray-200 transition duration-150"
-                  onClick={() => handleQuantityChange(-1)}
-                >
-                  −
-                </button>
-                <span className="px-5 py-2 text-lg font-bold text-gray-800 w-16 text-center">
-                  {selectedQuantity}
+              {/* ----------*** :: CROP INFO TAGS :: ***---------- */}
+              <div className="flex flex-wrap gap-2">
+                <span className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-gray-200 text-gray-700 rounded-lg uppercase">
+                  <BiSolidCategoryAlt size={15} /> {type}
                 </span>
-                <button
-                  className="px-4 py-2 text-xl font-medium bg-gray-100 hover:bg-gray-200 transition duration-150"
-                  onClick={() => handleQuantityChange(1)}
-                >
-                  +
-                </button>
+                <span className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-green-600 text-white rounded-lg uppercase">
+                  <FaBox /> STOCK: {quantity} {unit}
+                </span>
+                <span className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-amber-500 text-white rounded-lg uppercase">
+                  <FaBox size={15} /> Unit: {unit}
+                </span>
+                <span className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-purple-500 text-white rounded-lg uppercase">
+                  <FaBox size={15} /> Price: {pricePerUnit}
+                </span>
+              </div>
+
+              {/* ----------*** :: CROP DESC :: ***---------- */}
+              <div className="border-t pt-2">
+                <h2 className="text-2xl font-semibold text-gray-800 mb-3">
+                  Overview
+                </h2>
+                <p className="text-gray-600 leading-relaxed">{description}</p>
               </div>
             </div>
 
-            {/* Action and Total Price */}
-            <div className="flex flex-col gap-4">
-              <button
-                className="w-full py-4 bg-orange-600 text-white text-lg font-bold rounded-xl shadow-lg hover:bg-orange-700 transition duration-300 focus:outline-none focus:ring-4 focus:ring-orange-300"
-                onClick={() =>
-                  console.log(
-                    `Added ${selectedQuantity} ${crop.unit} of ${crop.name} to cart`
-                  )
-                }
-              >
-                Add to Cart
-              </button>
-              <p className="text-center text-sm text-gray-600">
-                Total:{" "}
-                <span className="text-lg font-bold text-gray-800">
-                  {totalPrice} TK
-                </span>{" "}
-                for {selectedQuantity} {crop.unit}
-              </p>
+            {/* ----------*** :: LEFT SIDE :: ***---------- */}
+            <div className="lg:col-span-2 h-full  bg-white p-6 shadow-xl rounded-xl border border-gray-100">
+              <h2 className="text-2xl font-bold text-[#d35507] ">
+                Express Your Interest
+              </h2>
+
+              {isSubmitted ? (
+                <div className=" mt-7 relative overflow-hidden p-5 mb-5 bg-linear-to-r from-green-50 to-green-100 border border-green-300 rounded-2xl shadow-md flex items-center gap-4 animate-fadeIn">
+                  <div className="shrink-0 ">
+                    <FaCheckCircle
+                      className="text-green-500 drop-shadow-md"
+                      size={26}
+                    />
+                  </div>
+
+                  <div>
+                    <p className="text-lg font-semibold text-green-700 tracking-wide">
+                      🎉 Interest submitted successfully!
+                    </p>
+                    <p className="text-sm text-green-600 mt-1">
+                      We’ve notified the seller about your request. You’ll be
+                      contacted soon.
+                    </p>
+                  </div>
+
+                  <div className="absolute bottom-0 left-0 w-full h-1 bg-linear-to-r from-green-400 to-emerald-500 animate-slideRight"></div>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmitInterest} className="space-y-5">
+                  {/* ----------*** :: INPUT => Qty :: ***---------- */}
+                  <div>
+                    <label className="label">
+                      <span className="label-text flex items-center gap-2 text-base font-medium text-gray-700">
+                        <FaWeightHanging /> Required Quantity ({unit})
+                      </span>
+                    </label>
+                    <input
+                      type="number"
+                      placeholder={`Enter quantity in ${unit}`}
+                      value={interestQuantity}
+                      onChange={(e) =>
+                        setInterestQuantity(
+                          Math.max(1, parseInt(e.target.value) || 0)
+                        )
+                      }
+                      min="1"
+                      required
+                      className="input input-bordered w-full text-lg p-3 border border-gray-300 focus:border-[#d35507] transition duration-150"
+                    />
+                  </div>
+
+                  {/* ----------*** :: INPUT => MESSAGE :: ***---------- */}
+                  <div>
+                    <label className="label">
+                      <span className="label-text flex items-center gap-2 text-base font-medium text-gray-700">
+                        <FaEnvelope /> Message to Seller (Optional)
+                      </span>
+                    </label>
+                    <textarea
+                      placeholder="E.g., I need delivery ASAP or discuss pricing."
+                      value={interestMessage}
+                      onChange={(e) => setInterestMessage(e.target.value)}
+                      className="textarea textarea-bordered h-24 w-full p-3 border border-gray-300 focus:border-[#d35507] transition duration-150"
+                    ></textarea>
+                  </div>
+
+                  {/* ----------*** :: TOATAL PRICE :: ***---------- */}
+                  <div className="flex justify-between items-center bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                    <span className="text-lg font-bold text-gray-700 flex items-center gap-2">
+                      <FaDollarSign className="text-[#d35507]" /> Estimated
+                      Total
+                    </span>
+                    <span className="text-3xl font-extrabold text-[#d35507]">
+                      {totalPrice} TK
+                    </span>
+                  </div>
+
+                  {/* ----------*** :: BTN => SUBMIT :: ***---------- */}
+                  <button
+                    type="submit"
+                    className={`w-full btn-main text-lg py-3 mt-4 ${
+                      actionLoading ? "opacity-70 cursor-not-allowed" : ""
+                    }`}
+                    disabled={actionLoading}
+                  >
+                    {actionLoading ? "Submitting..." : "Submit Interest"}
+                  </button>
+                </form>
+              )}
             </div>
           </div>
-        </div>
-
-        {/* Additional Details Section (Full Width) */}
-        <div className="mt-12 pt-8 border-t border-gray-100">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Detailed Information
-          </h2>
-
-          {/* Key Specifications Table/List */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-            {crop.details.map((detail, index) => (
-              <div key={index} className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-xs uppercase text-gray-500 font-medium mb-1">
-                  {detail.label}
-                </p>
-                <p className="text-base font-semibold text-gray-800">
-                  {detail.value}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          {/* Long Description */}
-          <p className="text-gray-700 leading-loose">{crop.longDescription}</p>
         </div>
       </div>
     </div>
   );
 };
 
-export default CropDeatilsPage;
+export default CropDetailsPage;

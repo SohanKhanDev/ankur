@@ -5,7 +5,8 @@ import { FaWeightScale } from "react-icons/fa6";
 import { Link } from "react-router";
 
 const CropsCard = ({ crop }) => {
-  const { description, image, name, pricePerUnit, quantity, type, unit } = crop;
+  const { _id, description, image, name, pricePerUnit, quantity, type, unit } =
+    crop;
 
   return (
     <div className="flex justify-center items-center  bg-gray-50 p-4">
@@ -70,7 +71,7 @@ const CropsCard = ({ crop }) => {
 
             {/* ----------*** :: BTN => VIEW DETAILS :: ***---------- */}
             <Link
-              to={``}
+              to={`/crops/${_id}`}
               className="px-6 py-3 btn-main font-semibold  shadow-md"
               onClick={() => console.log(`View details for ${name}`)}
             >

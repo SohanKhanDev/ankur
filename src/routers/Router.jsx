@@ -16,6 +16,7 @@ import ProfilePage from "../pages/ProfilePage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import ProfileEditPage from "../pages/ProfileEditPage.JSX";
 import PrivateRouteProvider from "../providers/PrivateRouteProvider";
+import CropDetailsPage from "../pages/CropDeatilsPage";
 
 const router = createBrowserRouter([
   /*** ----------*** :: LAYOUT => HOMELAYOUT :: ***---------- ***/
@@ -57,9 +58,10 @@ const router = createBrowserRouter([
 
       /*** ----------*** :: PAGE => CROPS DETAILS :: ***---------- ***/
       {
-        path: "/crops-details/:id",
-        element: <AllCropsPage />,
-        loader: () => fetch("http://localhost:3000/allCrops"),
+        path: "/crops/:id",
+        element: <CropDetailsPage />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/crops/${params.id}`),
       },
 
       /*** ----------*** :: PAGE => ADD CROPS :: ***---------- ***/
