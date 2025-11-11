@@ -8,6 +8,7 @@ import {
   FaEnvelope,
   FaPhoneAlt,
 } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 /*** ----------*** :: NAVLINKS :: ***---------- ***/
 const footerLinks = [
@@ -54,7 +55,7 @@ const Footer = () => {
                 href="#"
                 className="text-[#e67a37] hover:text-[#e67a37] transition-colors duration-300"
               >
-                <FaTwitter size={20} />
+                <FaXTwitter size={20} />
               </a>
               <a
                 href="#"

@@ -1,9 +1,11 @@
 import React from "react";
+import loading from "../assets/loading.json";
+import Lottie from "lottie-react";
 
 const LoadingPage = () => {
   return (
-    <div>
-      <h1>LoadingPage</h1>
+    <div className="w-full max-w-sm mx-auto flex justify-center items-center mx-auto">
+      <Lottie animationData={loading} loop={true} />
     </div>
   );
 };
