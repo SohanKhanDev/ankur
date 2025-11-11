@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import CropDeatilsPage from "./CropDeatilsPage";
+import Slider from "../components/Slider";
 
 const HomePage = () => {
   /*** ----------*** :: TITLE SETUP :: ***---------- ***/
@@ -9,7 +10,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <h1>HomePage</h1>
+      <Slider />
     </div>
   );
 };

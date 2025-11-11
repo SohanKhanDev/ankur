@@ -4,7 +4,7 @@ import Lottie from "lottie-react";
 
 const LoadingPage = () => {
   return (
-    <div className="w-full max-w-sm mx-auto flex justify-center items-center mx-auto">
+    <div className="w-full max-w-sm mx-auto flex justify-center items-center">
       <Lottie animationData={loading} loop={true} />
     </div>
   );
