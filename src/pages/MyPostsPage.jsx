@@ -98,34 +98,35 @@ const MyPostsPage = () => {
   };
 
   return (
-    <div className="min-h-screen p-4 sm:p-8 bg-gray-50">
+    <div className="min-h-screen p-4 sm:p-6 md:p-8 lg:p-12 bg-gray-50">
       {/* ---------- HEADER ---------- */}
-      <div className="text-center mb-10 border-b pb-5 border-gray-100">
-        <h1 className="text-4xl sm:text-5xl font-bold mb-4">
+      <div className="text-center mb-8 md:mb-12 border-b pb-4 md:pb-6 border-gray-100">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
           <span className="text-primary">Plant</span>{" "}
           <span className="text-secondary">Your Listing</span>
         </h1>
-        <p className="text-gray-600 max-w-2xl mx-auto mb-2">
+        <p className="text-gray-600 max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto mb-2 text-sm sm:text-base md:text-lg">
           Manage all the crops you have posted. Edit or delete them as needed.
         </p>
       </div>
 
       {crops.length === 0 ? (
-        <p className="text-gray-500 text-center">
+        <p className="text-gray-500 text-center text-sm sm:text-base md:text-lg">
           You have no crops posted yet.
         </p>
       ) : (
         <div className="overflow-x-auto bg-white shadow-md rounded-xl">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-100 text-gray-700 text-sm uppercase font-semibold">
-              <tr className="">
-                <th className="px-4 py-3 text-center">Photo</th>
-                <th className="px-4 py-3 text-center">Name</th>
-                <th className="px-4 py-3 text-center">Type</th>
+            <thead className="bg-gray-100 text-gray-700 text-xs sm:text-sm md:text-base uppercase font-semibold">
+              <tr>
+                {/* Combined Photo + Name + Type */}
+                <th className="px-4 py-3 text-left">Crop</th>
                 <th className="px-4 py-3 text-center">Price</th>
                 <th className="px-4 py-3 text-center">Quantity</th>
-                <th className="px-4 py-3 text-center">Location</th>
-                <th className="px-4 py-3 text-center">Description</th>
+                {/* Location hidden on sm/md */}
+                <th className="px-4 py-3 text-center hidden lg:table-cell">
+                  Location
+                </th>
                 <th className="px-4 py-3 text-center">Actions</th>
               </tr>
             </thead>
@@ -133,41 +134,57 @@ const MyPostsPage = () => {
             <tbody className="divide-y divide-gray-200 text-gray-700">
               {crops.map((crop) => (
                 <tr key={crop._id} className="hover:bg-gray-50 transition">
+                  {/* Combined column */}
                   <td className="px-4 py-3">
-                    <img
-                      src={crop.image}
-                      alt={crop.name}
-                      className="w-25 h-25 object-cover rounded-xl"
-                    />
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={crop.image}
+                        alt={crop.name}
+                        className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 object-cover rounded-lg"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src =
+                            "https://placehold.co/100x100/f3f4f6/374151?text=No+Image";
+                        }}
+                      />
+                      <div>
+                        <p className="font-semibold text-sm sm:text-base">
+                          {crop.name}
+                        </p>
+                        <p className="text-gray-500 text-xs sm:text-sm">
+                          {crop.type}
+                        </p>
+                      </div>
+                    </div>
                   </td>
-                  <td className="px-4 py-3">{crop.name}</td>
-                  <td className="px-4 py-3">{crop.type}</td>
-                  <td className="px-4 py-3">৳{crop.pricePerUnit}</td>
-                  <td className="px-4 py-3">
+
+                  <td className="px-4 py-3 text-center text-sm sm:text-base">
+                    ৳{crop.pricePerUnit}
+                  </td>
+                  <td className="px-4 py-3 text-center text-sm sm:text-base">
                     {crop.quantity} {crop.unit}
                   </td>
-                  <td className="px-4 py-3">{crop.location}</td>
-                  <td className="px-4 py-3">
-                    {crop.description.length > 50
-                      ? crop.description.substring(0, 50) + "..."
-                      : crop.description}
+
+                  {/* Location only visible on lg */}
+                  <td className="px-4 py-3 text-center text-sm sm:text-base hidden lg:table-cell">
+                    {crop.location}
                   </td>
 
                   <td className="py-3 text-center">
-                    <div className="flex justify-center items-center gap-3">
+                    <div className="flex justify-center items-center gap-2 sm:gap-3 md:gap-4">
                       <button
                         onClick={() => openEditModal(crop)}
-                        className="btn btn-main rounded-lg"
+                        className="btn btn-main rounded-lg px-2 sm:px-3 md:px-4 py-1 sm:py-2 md:py-3"
                         title="Edit"
                       >
-                        <FaEdit />
+                        <FaEdit className="text-xs sm:text-sm md:text-base lg:text-lg" />
                       </button>
                       <button
                         onClick={() => handleDelete(crop._id)}
-                        className="btn btn-delete  rounded-lg"
+                        className="btn btn-delete rounded-lg px-2 sm:px-3 md:px-4 py-1 sm:py-2 md:py-3"
                         title="Delete"
                       >
-                        <FaTrash />
+                        <FaTrash className="text-xs sm:text-sm md:text-base lg:text-lg" />
                       </button>
                     </div>
                   </td>

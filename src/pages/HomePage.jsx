@@ -14,8 +14,8 @@ const HomePage = () => {
   });
 
   return (
-    <div data-aos="fade-up" data-aos-duration="1500">
-      <div data-aos="fade-down" data-aos-duration="1000">
+    <div>
+      <div>
         <Slider />
       </div>
 
@@ -27,35 +27,23 @@ const HomePage = () => {
         <LatestCrops />
       </div>
 
-      <div
-        data-aos="fade-right"
-        data-aos-duration="900"
-        data-aos-easing="ease-out-cubic"
-      >
+      <div>
         <HowItWorks />
       </div>
 
-      <div
-        data-aos="fade-left"
-        data-aos-duration="900"
-        data-aos-easing="ease-out-cubic"
-      >
+      <div>
         <WhyChooseAnkur />
       </div>
 
       <div
-        data-aos="fade-right"
-        data-aos-duration="900"
-        data-aos-easing="ease-out-cubic"
+      // data-aos="fade-right"
+      // data-aos-duration="900"
+      // data-aos-easing="ease-out-cubic"
       >
         <TestimonialsSlider />
       </div>
 
-      <div
-        data-aos="fade-left"
-        data-aos-duration="900"
-        data-aos-easing="ease-out-cubic"
-      >
+      <div>
         <AgroNews />
       </div>
     </div>
