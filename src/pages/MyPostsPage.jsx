@@ -14,7 +14,6 @@ const MyPostsPage = () => {
 
   /*** ----------*** :: FETCH => MY POSTS :: ***---------- ***/
   useEffect(() => {
-    if (!user?.email) return;
     fetch(`http://localhost:3000/myposts?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => setCrops(data))
@@ -119,14 +118,14 @@ const MyPostsPage = () => {
         <div className="overflow-x-auto bg-white shadow-md rounded-xl">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-100 text-gray-700 text-sm uppercase font-semibold">
-              <tr>
-                <th className="px-4 py-3 text-left">Photo</th>
-                <th className="px-4 py-3 text-left">Name</th>
-                <th className="px-4 py-3 text-left">Type</th>
-                <th className="px-4 py-3 text-left">Price</th>
-                <th className="px-4 py-3 text-left">Quantity</th>
-                <th className="px-4 py-3 text-left">Location</th>
-                <th className="px-4 py-3 text-left">Description</th>
+              <tr className="">
+                <th className="px-4 py-3 text-center">Photo</th>
+                <th className="px-4 py-3 text-center">Name</th>
+                <th className="px-4 py-3 text-center">Type</th>
+                <th className="px-4 py-3 text-center">Price</th>
+                <th className="px-4 py-3 text-center">Quantity</th>
+                <th className="px-4 py-3 text-center">Location</th>
+                <th className="px-4 py-3 text-center">Description</th>
                 <th className="px-4 py-3 text-center">Actions</th>
               </tr>
             </thead>
@@ -138,7 +137,7 @@ const MyPostsPage = () => {
                     <img
                       src={crop.image}
                       alt={crop.name}
-                      className="w-16 h-16 object-cover rounded-xl"
+                      className="w-25 h-25 object-cover rounded-xl"
                     />
                   </td>
                   <td className="px-4 py-3">{crop.name}</td>
