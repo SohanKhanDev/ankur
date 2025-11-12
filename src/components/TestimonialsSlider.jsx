@@ -19,12 +19,10 @@ const TestimonialsSlider = () => {
       });
   }, []);
 
-  console.log(testimonials);
-
   return (
     <section className="py-16  hidden md:block">
+      {/* ----------*** :: HEADER :: ***---------- */}
       <div className="container mx-auto px-4 text-center">
-        {/* Title */}
         <h2 className="text-4xl sm:text-5xl font-bold  mb-4">
           <span className="text-primary"> What </span>{" "}
           <span className="text-secondary"> Our Customers Are Saying!</span>
@@ -40,7 +38,7 @@ const TestimonialsSlider = () => {
           <h1 className="font-bold text-3xl md:text-5xl"></h1>
         </div>
 
-        {/* --- slider --- */}
+        {/* ----------*** :: SLIDER :: ***---------- */}
         <Swiper
           modules={[Pagination, Autoplay]}
           slidesPerView={1}

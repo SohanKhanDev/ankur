@@ -32,16 +32,17 @@
 
 /*** ----------*** :: BTN => MAIN :: ***---------- ***/
 .btn-main {
-  @apply px-3 py-3 bg-primary text-white font-semibold rounded-full hover:bg-[#92c702] transition duration-300
+  @apply px-3 py-2 text-sm sm:px-4 sm:py-2 sm:text-base md:px-5 md:py-3 md:text-lg bg-primary text-white font-semibold rounded-full hover:bg-[#92c702] transition duration-300;
 }
 
 .btn-secondary {
-  @apply px-3 py-3 bg-secondary text-white font-semibold rounded-full hover:bg-[#eb7704] transition duration-300
+  @apply px-3 py-2 text-sm sm:px-4 sm:py-2 sm:text-base md:px-5 md:py-3 md:text-lg bg-secondary text-white font-semibold rounded-full hover:bg-[#eb7704] transition duration-300;
 }
 
 .btn-delete {
-  @apply px-3 py-3 text-white font-semibold rounded-full bg-red-600 hover:bg-red-700 transition duration-300
+  @apply px-3 py-2 text-sm sm:px-4 sm:py-2 sm:text-base md:px-5 md:py-3 md:text-lg text-white font-semibold rounded-full bg-red-600 hover:bg-red-700 transition duration-300;
 }
+
 
 /*** ----------*** :: CUSTOM SHADOW :: ***---------- ***/
 .custom-shadow {
