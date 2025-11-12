@@ -5,6 +5,7 @@ import TestimonialsSlider from "../components/TestimonialsSlider";
 import HowItWorks from "../components/HowItWorks";
 import WhyChooseAnkur from "../components/WhyChooseAnkur";
 import AgroNews from "../components/AgroNews";
+import LatestCrops from "../components/LatestCrops";
 
 const HomePage = () => {
   /*** ----------*** :: TITLE SETUP :: ***---------- ***/
@@ -16,6 +17,14 @@ const HomePage = () => {
     <div data-aos="fade-up" data-aos-duration="1500">
       <div data-aos="fade-down" data-aos-duration="1000">
         <Slider />
+      </div>
+
+      <div
+        data-aos="fade-right"
+        data-aos-duration="900"
+        data-aos-easing="ease-out-cubic"
+      >
+        <LatestCrops />
       </div>
 
       <div

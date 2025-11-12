@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useLoaderData } from "react-router";
 import CropsCard from "../components/CropsCard";
 import { toast } from "react-toastify";
+import { AuthContext } from "../providers/AuthProvide";
 
 const AllCropsPage = () => {
   /*** ----------*** :: HOOKS :: ***---------- ***/
@@ -14,12 +15,10 @@ const AllCropsPage = () => {
     e.preventDefault();
 
     const searchText = e.target.search.value;
-    console.log(searchText);
 
     fetch(`http://localhost:3000/cropsSearch?search=${searchText}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setCrops(data);
       })
       .catch(() => {

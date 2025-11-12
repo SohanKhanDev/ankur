@@ -49,37 +49,42 @@ const MyInterestsPage = () => {
             </thead>
 
             <tbody className="divide-y divide-gray-200 text-gray-700">
-              {interests.map((interest) => (
-                <tr key={interest._id} className="hover:bg-gray-50 transition">
-                  <td className="px-4 py-3">
-                    <img
-                      src={interest.image}
-                      className="w-25 h-25 object-cover rounded-xl"
-                    />
-                  </td>
-                  <td className="px-4 py-3">{interest.name}</td>
-                  <td className="px-4 py-3">{interest.owner.ownerName}</td>
-                  <td className="px-4 py-3">
-                    {interest.quantity} {interest.unit}
-                  </td>
-                  <td className="px-4 py-3 max-w-xs truncate">
-                    {interest.interests[0].message}
-                  </td>
-                  <td className="px-4 py-3 text-center">
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        interest.interests[0].status === "Pending"
-                          ? "bg-yellow-100 text-yellow-700"
-                          : interest.interests[0].status === "Accepted"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-700"
-                      }`}
-                    >
-                      {interest.interests[0].status}
-                    </span>
-                  </td>
-                </tr>
-              ))}
+              {[...interests]
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map((interest) => (
+                  <tr
+                    key={interest._id}
+                    className="hover:bg-gray-50 transition"
+                  >
+                    <td className="px-4 py-3">
+                      <img
+                        src={interest.image}
+                        className="w-25 h-25 object-cover rounded-xl"
+                      />
+                    </td>
+                    <td className="px-4 py-3">{interest.name}</td>
+                    <td className="px-4 py-3">{interest.owner.ownerName}</td>
+                    <td className="px-4 py-3">
+                      {interest.quantity} {interest.unit}
+                    </td>
+                    <td className="px-4 py-3 max-w-xs truncate">
+                      {interest.interests[0].message}
+                    </td>
+                    <td className="px-4 py-3 text-center">
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-medium ${
+                          interest.interests[0].status === "Pending"
+                            ? "bg-yellow-100 text-yellow-700"
+                            : interest.interests[0].status === "Accepted"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-red-100 text-red-700"
+                        }`}
+                      >
+                        {interest.interests[0].status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

@@ -27,7 +27,11 @@ const router = createBrowserRouter([
     hydrateFallbackElement: <LoadingPage />,
     children: [
       /*** ----------*** :: PAGE => HOME :: ***---------- ***/
-      { index: true, element: <HomePage /> },
+      {
+        index: true,
+        element: <HomePage />,
+        loader: () => fetch("http://localhost:3000/allcrops"),
+      },
 
       /*** ----------*** :: PAGE => PROFILE :: ***---------- ***/
       {
