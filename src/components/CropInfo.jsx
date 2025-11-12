@@ -29,24 +29,26 @@ const CropInfoSection = ({
 
       {/* ----------*** :: CROP INFO TAGS :: ***---------- */}
       <div className="flex flex-wrap gap-2">
-        <span className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-gray-200 text-gray-700 rounded-lg uppercase">
+        <span className="flex items-center gap-1 px-2 py-2 text-sm font-medium bg-gray-200 text-gray-700 rounded-lg">
           <BiSolidCategoryAlt size={15} /> {type}
         </span>
-        <span className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-green-600 text-white rounded-lg uppercase">
-          <FaBox /> STOCK: {quantity} {unit}
+        <span className="flex items-center gap-1 px-2 py-2 text-sm font-medium bg-green-600 text-white rounded-lg uppercase">
+          <FaBox /> Stock: {quantity} {unit}
         </span>
-        <span className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-amber-500 text-white rounded-lg uppercase">
+        <span className="flex items-center gap-1 px-2 py-2 text-sm font-medium bg-amber-500 text-white rounded-lg uppercase">
           <FaBox size={15} /> Unit: {unit}
         </span>
-        <span className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-purple-500 text-white rounded-lg uppercase">
-          <FaBox size={15} /> Price: {pricePerUnit}
+        <span className="flex items-center gap-1 px-2 py-2 text-sm font-medium bg-purple-500 text-white rounded-lg uppercase">
+          <FaBox size={15} /> Rate: {pricePerUnit}
         </span>
       </div>
 
       {/* ----------*** :: CROP DESC :: ***---------- */}
       <div className="border-t pt-2">
         <h2 className="text-2xl font-semibold text-gray-800 mb-3">Overview</h2>
-        <p className="text-gray-600 leading-relaxed">{description}</p>
+        <p className="text-gray-600 leading-relaxed text-justify">
+          {description}
+        </p>
       </div>
     </div>
   );

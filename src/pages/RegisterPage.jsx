@@ -299,12 +299,7 @@ const RegisterPage = () => {
               <button
                 type="submit"
                 disabled={actionLoading}
-                className={`w-full py-3 rounded-lg text-white font-semibold transition-all duration-300 shadow-lg 
-                  ${
-                    actionLoading
-                      ? "bg-gray-400 cursor-not-allowed"
-                      : "bg-[#2a875f] hover:bg-[#206a4b]" // Using the dark green from the logo for the main button
-                  }`}
+                className="w-full btn btn-main"
               >
                 {actionLoading ? "Creating Account..." : "SIGN UP"}
               </button>
@@ -334,7 +329,7 @@ const RegisterPage = () => {
                 Already have an account?{" "}
                 <Link
                   to="/auth/login"
-                  className="font-medium text-[#2a875f] hover:underline"
+                  className="font-medium text-[#d35507] hover:underline"
                 >
                   Sign In
                 </Link>
@@ -362,7 +357,7 @@ const RegisterPage = () => {
           style={{ backgroundImage: `url(${imgage})` }}
         >
           <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 text-center shadow-md mt-90">
-            <h2 className="text-3xl font-bold mb-3 text-[#2a875f]">
+            <h2 className="text-3xl font-bold mb-3 text-[#d35507]">
               Welcome to Ankur
             </h2>
             <p className="text-base text-center max-w-sm leading-relaxed text-gray-600 mx-auto">
@@ -370,12 +365,6 @@ const RegisterPage = () => {
               agricultural sector such as farmers, traders, and consumers in one
               digital space.
             </p>
-          </div>
-
-          <div className="absolute bottom-10 flex space-x-2">
-            <span className="w-2 h-2 bg-gray-300 rounded-full"></span>{" "}
-            <span className="w-2 h-2 bg-[#2a875f] rounded-full"></span>{" "}
-            <span className="w-2 h-2 bg-gray-300 rounded-full"></span>
           </div>
         </div>
       </div>

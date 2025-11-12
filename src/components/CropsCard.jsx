@@ -9,7 +9,12 @@ const CropsCard = ({ crop }) => {
     crop;
 
   return (
-    <div className="flex justify-center items-center  bg-gray-50 p-4">
+    <div
+      data-aos="zoom-in"
+      data-aos-duration="900"
+      data-aos-easing="ease-out-cubic"
+      className="flex justify-center items-center  bg-gray-50 p-4"
+    >
       <div className="w-full max-w-sm rounded-3xl overflow-hidden shadow-xl bg-white/90 backdrop-blur-md transition duration-500 hover:shadow-2xl">
         {/* ----------*** :: CROPS IMAGE :: ***---------- */}
         <div className="relative h-64 flex items-center justify-center rounded-t-3xl bg-gray-50 overflow-hidden">
@@ -53,8 +58,11 @@ const CropsCard = ({ crop }) => {
 
           {/* ----------*** :: CROPS DESC :: ***---------- */}
           <p className="text-gray-600 mb-6 leading-relaxed text-sm">
-            {description}
+            {description.length > 100
+              ? description.slice(0, 100) + "..."
+              : description}
           </p>
+
           {/* ----------*** :: BOTTOM PART :: ***---------- */}
           <div className="flex justify-between items-center pt-4 border-t border-gray-100">
             <div>

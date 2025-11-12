@@ -25,11 +25,19 @@ const TestimonialsSlider = () => {
     <section className="py-16  hidden md:block">
       <div className="container mx-auto px-4 text-center">
         {/* Title */}
-        <h2 className="text-3xl font-extrabold text-gray-800 mb-12"></h2>
+        <h2 className="text-4xl sm:text-5xl font-bold  mb-4">
+          <span className="text-primary"> What </span>{" "}
+          <span className="text-secondary"> Our Customers Are Saying!</span>
+        </h2>
+        <p className="text-gray-600 max-w-2xl mx-auto mb-12">
+          We are proud of the community we've built. Hear directly from the
+          farmers, traders, and buyers who use Ankur to transform their
+          agricultural transactions. Their experiences reflect the trust,
+          efficiency, and growth fostered by our platform.
+        </p>
+
         <div className="text-center mb-8">
-          <h1 className="font-bold text-3xl md:text-5xl">
-            What Our Customers Are Saying!
-          </h1>
+          <h1 className="font-bold text-3xl md:text-5xl"></h1>
         </div>
 
         {/* --- slider --- */}

@@ -15,10 +15,32 @@
   themes: light --default;
 }
 
+@plugin "daisyui/theme" {
+  name: "theme";
+  default: true;
+  prefersdark: false;
+
+
+  --color-primary: #9ec631;
+  --color-secondary: #ea8d2d;
+  --color-base-content: oklch(20% 0.05 240);
+  --color-primary-content: oklch(98% 0.01 240);
+  --color-secondary-content: oklch(98% 0.01 200);
+
+}
+
 
 /*** ----------*** :: BTN => MAIN :: ***---------- ***/
 .btn-main {
-  @apply py-3 rounded-lg text-white font-semibold transition-all duration-300 shadow-lg bg-[#e67a37] hover:bg-[#d35507]
+  @apply px-3 py-3 bg-primary text-white font-semibold rounded-full hover:bg-[#92c702] transition duration-300
+}
+
+.btn-secondary {
+  @apply px-3 py-3 bg-secondary text-white font-semibold rounded-full hover:bg-[#eb7704] transition duration-300
+}
+
+.btn-delete {
+  @apply px-3 py-3 text-white font-semibold rounded-full bg-red-600 hover:bg-red-700 transition duration-300
 }
 
 /*** ----------*** :: CUSTOM SHADOW :: ***---------- ***/
@@ -26,4 +48,12 @@
   box-shadow:
     0 25px 50px -12px rgba(0, 0, 0, 0.1),
     0 0 0 1px rgba(229, 231, 235, 0.6);
+}
+
+.inputClass {
+  @apply w-full px-4 py-2 border border-gray-200 rounded-xl focus:border-primary focus:ring-1 focus:ring-primary transition duration-200 shadow-sm outline-none bg-white/90;
+}
+
+.selectClass {
+  @apply w-full px-4 py-2 border border-gray-200 rounded-xl focus:border-primary focus:ring-1 focus:ring-primary shadow-sm outline-none bg-white;
 }

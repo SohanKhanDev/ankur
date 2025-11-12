@@ -86,7 +86,7 @@ const ProfilePage = () => {
                 <Link
                   to={"/editprofile"}
                   disabled={actionLoading}
-                  className={`w-1/2 text-center py-3 rounded-lg text-white font-semibold transition-all duration-300 shadow-lg ${
+                  className={`btn btn-primary w-1/2 text-center py-3 rounded-lg text-white font-semibold transition-all duration-300 shadow-lg ${
                     actionLoading
                       ? "bg-gray-400 cursor-not-allowed"
                       : "btn-main"
@@ -99,7 +99,7 @@ const ProfilePage = () => {
                 <button
                   onClick={handleLogout}
                   disabled={actionLoading}
-                  className={`w-1/2 py-3 rounded-lg text-white font-semibold transition-all duration-300 shadow-lg ${
+                  className={`btn btn-secondary  w-1/2 text-center py-3 rounded-lg text-white font-semibold transition-all duration-300 shadow-lg ${
                     actionLoading
                       ? "bg-gray-400 cursor-not-allowed"
                       : "bg-gray-600 hover:bg-gray-700"
@@ -114,7 +114,7 @@ const ProfilePage = () => {
             <div className="mt-6 text-center text-sm">
               <Link
                 to="/"
-                className="text-[#e67a37] hover:underline font-medium"
+                className="text-secondary hover:underline font-medium"
               >
                 Go to Home Page
               </Link>

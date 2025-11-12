@@ -59,7 +59,11 @@ const router = createBrowserRouter([
       /*** ----------*** :: PAGE => CROPS DETAILS :: ***---------- ***/
       {
         path: "/crops/:id",
-        element: <CropDetailsPage />,
+        element: (
+          <PrivateRouteProvider>
+            <CropDetailsPage />
+          </PrivateRouteProvider>
+        ),
         loader: ({ params }) =>
           fetch(`http://localhost:3000/crops/${params.id}`),
       },
@@ -82,6 +86,7 @@ const router = createBrowserRouter([
             <MyPostsPage />
           </PrivateRouteProvider>
         ),
+        loader: () => {},
       },
 
       /*** ----------*** :: PAGE => MY INTERESTS :: ***---------- ***/

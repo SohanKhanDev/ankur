@@ -42,7 +42,7 @@ const Slider = () => {
       image: slider5,
       title: "Grow Your Business",
       description:
-        "Expand your reach, find new buyers, and increase profitability with Ankur’s digital platform.",
+        "Expand your reach, find new buyers, and increase profitability with Ankur's digital platform.",
     },
   ];
 
@@ -57,7 +57,6 @@ const Slider = () => {
           bulletClass: "swiper-pagination-bullet custom-bullet",
           bulletActiveClass: "swiper-pagination-bullet-active custom-active",
         }}
-        navigation={true}
         autoplay={{ delay: 5000, disableOnInteraction: false }}
         className="w-full h-64 sm:h-80 md:h-96 lg:h-[500px] rounded-2xl"
       >
@@ -71,7 +70,7 @@ const Slider = () => {
             />
 
             <div className="absolute top-1/4 left-6 sm:left-12 md:left-16 lg:left-24 text-left max-w-lg">
-              <h2 className="text-white text-3xl sm:text-4xl md:text-5xl font-bold drop-shadow-lg">
+              <h2 className="text-primary text-3xl sm:text-4xl md:text-5xl font-bold drop-shadow-lg">
                 {slide.title}
               </h2>
               <p className="mt-4 text-white text-sm sm:text-base md:text-lg drop-shadow-md">

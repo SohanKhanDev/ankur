@@ -150,6 +150,13 @@ const CropDetailsPage = () => {
       .catch((error) => console.error("Error:", error));
   };
 
+  /*** ----------*** :: TITLE SETUP :: ***---------- ***/
+  useEffect(() => {
+    if (crop?.name) {
+      document.title = `${crop.name.toUpperCase()} | ANKUR`;
+    }
+  }, [crop]);
+
   return (
     <div className="flex justify-center bg-gray-50 min-h-screen p-8 font-sans">
       <div className="w-full max-w-7xl bg-white shadow-2xl rounded-xl p-8 md:p-12">

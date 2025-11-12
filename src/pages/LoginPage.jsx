@@ -78,6 +78,8 @@ const LoginPage = () => {
       .then((result) => {
         const user = result.user;
         setUser(user);
+        navigate(`${location.state ? location.state : "/"}`);
+        console.log(location.state);
 
         /*** ----------*** :: DB => POST USERS  :: ***---------- ***/
         const userInfo = {
@@ -101,7 +103,6 @@ const LoginPage = () => {
               toast.success("Registration successful! Welcome to Ankur! 🎉");
             }
           });
-        navigate("/");
       })
       .catch((error) => {
         const customMessage = getCustomErrorMessage(error);
