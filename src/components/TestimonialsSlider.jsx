@@ -12,7 +12,7 @@ const TestimonialsSlider = () => {
 
   /*** ----------*** :: DB FETCH => TESTIMONIALS :: ***---------- ***/
   useEffect(() => {
-    fetch(`http://ankur-server-ten.vercel.app/testimonials`)
+    fetch(`https://ankur-server-ten.vercel.app/testimonials`)
       .then((res) => res.json())
       .then((data) => {
         setTestimonials(data);

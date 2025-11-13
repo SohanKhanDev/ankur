@@ -12,14 +12,14 @@ const EditCropModal = ({
 
   /*** ---------- FETCH UNITS ---------- ***/
   useEffect(() => {
-    fetch(`http://ankur-server-ten.vercel.app/units`)
+    fetch(`https://ankur-server-ten.vercel.app/units`)
       .then((res) => res.json())
       .then((data) => setUnits(data));
   }, []);
 
   /*** ---------- FETCH CROP TYPES ---------- ***/
   useEffect(() => {
-    fetch(`http://ankur-server-ten.vercel.app/crop-type`)
+    fetch(`https://ankur-server-ten.vercel.app/crop-type`)
       .then((res) => res.json())
       .then((data) => setCropTypes(data));
   }, []);
@@ -64,13 +64,14 @@ const EditCropModal = ({
                   required
                 />
               </div>
+
               <div>
                 <label className="block text-xs sm:text-sm md:text-base font-semibold text-gray-700 mb-1">
                   Crop Type
                 </label>
                 <select
                   name="type"
-                  defaultValue={selectedCrop.type}
+                  value={selectedCrop.type}
                   className="selectClass w-full"
                   required
                 >
@@ -83,7 +84,6 @@ const EditCropModal = ({
               </div>
             </div>
 
-            {/* Price + Unit + Quantity */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
               <div>
                 <label className="block text-xs sm:text-sm md:text-base font-semibold text-gray-700 mb-1">
@@ -92,7 +92,7 @@ const EditCropModal = ({
                 <input
                   type="number"
                   name="price"
-                  defaultValue={selectedCrop.pricePerUnit}
+                  value={selectedCrop.pricePerUnit}
                   className="inputClass w-full"
                   required
                 />
@@ -128,7 +128,6 @@ const EditCropModal = ({
               </div>
             </div>
 
-            {/* Description + Location + Image */}
             <div className="space-y-5">
               <div>
                 <label className="block text-xs sm:text-sm md:text-base font-semibold text-gray-700 mb-1">
@@ -171,7 +170,7 @@ const EditCropModal = ({
             </div>
           </section>
 
-          {/* Submit button */}
+          {/* ---------- BTN => UPDATE ---------- */}
           <button
             type="submit"
             className="w-full btn btn-main text-sm sm:text-base md:text-lg py-2 sm:py-3"

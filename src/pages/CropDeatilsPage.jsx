@@ -78,7 +78,7 @@ const CropDetailsPage = () => {
       totalPrice,
     };
 
-    fetch(`http://ankur-server-ten.vercel.app/interests/${_id}`, {
+    fetch(`https://ankur-server-ten.vercel.app/interests/${_id}`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(newInterest),
@@ -113,7 +113,7 @@ const CropDetailsPage = () => {
     }
 
     fetch(
-      `http://ankur-server-ten.vercel.app/interests/accept?interestId=${interestId}`,
+      `https://ankur-server-ten.vercel.app/interests/accept?interestId=${interestId}`,
       {
         method: "PUT",
       }
@@ -128,13 +128,13 @@ const CropDetailsPage = () => {
           ),
         }));
       })
-       .catch(() => toast.error("Error"));
+      .catch(() => toast.error("Error"));
   };
 
   /*** ----------*** :: HANDLER => INTEREST REJECT  :: ***---------- ***/
   const handleInterestReject = (interestId) => {
     fetch(
-      `http://ankur-server-ten.vercel.app/interests/reject?interestId=${interestId}`,
+      `https://ankur-server-ten.vercel.app/interests/reject?interestId=${interestId}`,
       {
         method: "PUT",
       }
@@ -148,7 +148,7 @@ const CropDetailsPage = () => {
           ),
         }));
       })
-       .catch(() => toast.error("Error"));
+      .catch(() => toast.error("Error"));
   };
 
   /*** ----------*** :: TITLE SETUP :: ***---------- ***/

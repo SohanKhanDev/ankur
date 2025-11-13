@@ -13,7 +13,9 @@ const AllCropsPage = () => {
     e.preventDefault();
     const searchText = e.target.search.value;
 
-    fetch(`http://ankur-server-ten.vercel.app/cropsSearch?search=${searchText}`)
+    fetch(
+      `https://ankur-server-ten.vercel.app/cropsSearch?search=${searchText}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setCrops(data);

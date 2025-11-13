@@ -14,7 +14,7 @@ const AddCropsPage = () => {
 
   /*** ----------*** :: DB FETCH => UNITS :: ***---------- ***/
   useEffect(() => {
-    fetch(`http://ankur-server-ten.vercel.app/units`)
+    fetch(`https://ankur-server-ten.vercel.app/units`)
       .then((res) => res.json())
       .then((data) => {
         setUnits(data);
@@ -23,7 +23,7 @@ const AddCropsPage = () => {
 
   /*** ----------*** :: DB FETCH => CROP TYPES :: ***---------- ***/
   useEffect(() => {
-    fetch(`http://ankur-server-ten.vercel.app/crop-type`)
+    fetch(`https://ankur-server-ten.vercel.app/crop-type`)
       .then((res) => res.json())
       .then((data) => {
         setCropstypes(data);
@@ -56,7 +56,7 @@ const AddCropsPage = () => {
       createdAt: new Date(),
     };
 
-    fetch("http://ankur-server-ten.vercel.app/addcrop", {
+    fetch("https://ankur-server-ten.vercel.app/addcrop", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(cropData),

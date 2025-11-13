@@ -21,7 +21,7 @@ const MyPostsPage = () => {
   /*** ----------*** :: FETCH => MY POSTS :: ***---------- ***/
   useEffect(() => {
     setContentLoading(true);
-    fetch(`http://ankur-server-ten.vercel.app/myposts?email=${user.email}`)
+    fetch(`https://ankur-server-ten.vercel.app/myposts?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         setCrops(data);
@@ -56,7 +56,7 @@ const MyPostsPage = () => {
     };
 
     fetch(
-      `http://ankur-server-ten.vercel.app/crop/edit?cropid=${selectedCrop._id}`,
+      `https://ankur-server-ten.vercel.app/crop/edit?cropid=${selectedCrop._id}`,
       {
         method: "PUT",
         headers: {
@@ -91,7 +91,7 @@ const MyPostsPage = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         fetch(
-          `http://ankur-server-ten.vercel.app/crop/delete?cropid=${cropId}`,
+          `https://ankur-server-ten.vercel.app/crop/delete?cropid=${cropId}`,
           {
             method: "DELETE",
           }
@@ -100,7 +100,7 @@ const MyPostsPage = () => {
           .then(() => {
             /*** ----------*** :: HANDLER => CROP DELETE :: ***---------- ***/
             fetch(
-              `http://ankur-server-ten.vercel.app/interests/delete?cropid=${cropId}`,
+              `https://ankur-server-ten.vercel.app/interests/delete?cropid=${cropId}`,
               {
                 method: "DELETE",
               }

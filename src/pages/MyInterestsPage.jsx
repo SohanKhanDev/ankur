@@ -13,7 +13,7 @@ const MyInterestsPage = () => {
   /*** ----------*** :: FETCH => MY INTERESTS :: ***---------- ***/
   useEffect(() => {
     setContentLoading(true);
-    fetch(`http://ankur-server-ten.vercel.app/myinterests?email=${user.email}`)
+    fetch(`https://ankur-server-ten.vercel.app/myinterests?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         setInterests(data);
@@ -99,7 +99,7 @@ const MyInterestsPage = () => {
                           {interest.owner.ownerName}
                         </td>
                         <td className="px-4 py-3 text-sm sm:text-base">
-                          {interest.quantity} {interest.unit}
+                          {interest.interests[0].quantity} {interest.unit}
                         </td>
 
                         <td className="px-4 py-3 text-sm sm:text-base whitespace-normal wrap-break-word max-w-[150px] sm:max-w-[250px] md:max-w-[350px] lg:max-w-[500px] hidden lg:table-cell">

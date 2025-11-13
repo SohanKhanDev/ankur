@@ -37,16 +37,19 @@ const ProfileEditPage = () => {
         setActionLoading(false);
       });
 
-    fetch(`http://ankur-server-ten.vercel.app/users/edit?email=${user.email}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: name,
-        image: photourl,
-      }),
-    })
+    fetch(
+      `https://ankur-server-ten.vercel.app/users/edit?email=${user.email}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          image: photourl,
+        }),
+      }
+    )
       .then((res) => res.json())
       .then(() => {})
       .catch(() => toast.error("Error"));

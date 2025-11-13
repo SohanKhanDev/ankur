@@ -90,7 +90,7 @@ const RegisterPage = () => {
           image: result.user.photoURL,
         };
 
-        fetch("http://ankur-server-ten.vercel.app/users", {
+        fetch("https://ankur-server-ten.vercel.app/users", {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify(userInfo),
@@ -147,7 +147,7 @@ const RegisterPage = () => {
           image: user.photoURL,
         };
 
-        fetch("http://ankur-server-ten.vercel.app/users", {
+        fetch("https://ankur-server-ten.vercel.app/users", {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify(userInfo),
