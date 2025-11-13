@@ -46,7 +46,7 @@ const WhyChooseAnkur = () => {
           </h2>
         </div>
 
-        <div className="md:w-1/2 text-right">
+        <div className=" text-right">
           <p className="text-gray-600 max-w-2xl mx-auto md:mx-0 mb-6 md:mb-0 text-sm sm:text-base md:text-lg leading-relaxed">
             Ankur empowers farmers and traders through a simple, transparent,
             and digital agricultural ecosystem that helps everyone grow

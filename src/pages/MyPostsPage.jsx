@@ -69,7 +69,7 @@ const MyPostsPage = () => {
     )
       .then((res) => res.json())
       .then(() => {})
-      .catch((error) => console.error("Error:", error));
+      .catch(() => toast.error("Error"));
 
     setCrops((prev) =>
       prev.map((crop) => (crop._id === selectedCrop._id ? updatedCrop : crop))
@@ -107,12 +107,12 @@ const MyPostsPage = () => {
             )
               .then((res) => res.json())
               .then(() => {})
-              .catch((error) => console.error("Error:", error));
+              .catch(() => toast.error("Error"));
 
             /*** ----------*** :: UI => INSTANT UPDATE :: ***---------- ***/
             setCrops((prev) => prev.filter((crop) => crop._id !== cropId));
           })
-          .catch((error) => console.error("Error:", error));
+          .catch(() => toast.error("Error"));
 
         Swal.fire({
           title: "Deleted!",

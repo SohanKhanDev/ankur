@@ -45,8 +45,8 @@ const AgroNews = () => {
           </h2>
         </div>
 
-        <div className="md:w-1/2 text-right">
-          <p className="text-gray-600 max-w-2xl mx-auto md:mx-0 mb-6 md:mb-0 text-sm sm:text-base md:text-lg leading-relaxed">
+        <div className=" text-right">
+          <p className="text-gray-600 max-w-2xl mx-auto md:mx-0 mb-6 md:mb-0 text-sm sm:text-base md:text-lg leading-relaxed ">
             Stay updated with the latest agricultural news, market insights, and
             government initiatives to help you make better farming and trading
             decisions.

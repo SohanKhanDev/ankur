@@ -128,7 +128,7 @@ const CropDetailsPage = () => {
           ),
         }));
       })
-      .catch((error) => console.error("Error:", error));
+       .catch(() => toast.error("Error"));
   };
 
   /*** ----------*** :: HANDLER => INTEREST REJECT  :: ***---------- ***/
@@ -148,7 +148,7 @@ const CropDetailsPage = () => {
           ),
         }));
       })
-      .catch((error) => console.error("Error:", error));
+       .catch(() => toast.error("Error"));
   };
 
   /*** ----------*** :: TITLE SETUP :: ***---------- ***/

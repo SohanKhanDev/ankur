@@ -49,7 +49,7 @@ const ProfileEditPage = () => {
     })
       .then((res) => res.json())
       .then(() => {})
-      .catch((error) => console.error("Error:", error));
+      .catch(() => toast.error("Error"));
   };
 
   /*** ----------*** :: TITLE SETUP :: ***---------- ***/
