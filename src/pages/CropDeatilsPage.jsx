@@ -13,7 +13,6 @@ import { toast } from "react-toastify";
 import CropInfo from "../components/CropInfo";
 import ExpressInterest from "../components/ExpressInterest";
 import InterestsTable from "../components/InterestsTable";
-
 import nodata from "../assets/no data.json";
 import Lottie from "lottie-react";
 
@@ -22,6 +21,7 @@ const CropDetailsPage = () => {
   const data = useLoaderData();
 
   const [crop, setCrop] = useState(data);
+
   const {
     _id,
     description,
@@ -209,7 +209,7 @@ const CropDetailsPage = () => {
           </div>
         </div>
 
-        {/* ----------*** :: EXISTING INTERESTS (MIDDLE PART) :: ***---------- */}
+        {/* ----------*** :: EXISTING INTERESTS :: ***---------- */}
         <InterestsTable
           isOwner={isOwner}
           interests={crop?.interests}

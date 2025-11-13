@@ -21,6 +21,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [actionLoading, setActionLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
+  const [contentLoading, setContentLoading] = useState(true);
 
   /*** ----------*** :: VARIABLES :: ***---------- ***/
   const auth = getAuth(app);
@@ -84,6 +85,8 @@ const AuthProvider = ({ children }) => {
     setActionLoading,
     initialLoading,
     setInitialLoading,
+    contentLoading,
+    setContentLoading,
     googleSignin,
     createUser,
     updateUser,

@@ -44,8 +44,9 @@ const ProfilePage = () => {
               />
             </div>
 
-            <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-              Your Profile
+            <h2 className="flex justify-center text-2xl sm:text-4xl md:text-3xl font-bold my-4">
+              <span className="text-primary">Your&nbsp;</span>
+              <span className="text-secondary">Profile</span>
             </h2>
 
             {/* ----------*** :: PHOTO DISPLAY :: ***---------- */}

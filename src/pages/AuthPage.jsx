@@ -1,11 +1,8 @@
 import React from "react";
+import { Navigate } from "react-router";
 
 const AuthPage = () => {
-  return (
-    <div>
-      <h1>AuthPage</h1>
-    </div>
-  );
+  return <Navigate to="/" />;
 };
 
 export default AuthPage;

@@ -71,9 +71,11 @@ const ProfileEditPage = () => {
               />
             </div>
 
-            <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-              Edit Your Profile
+            <h2 className="flex justify-center text-2xl sm:text-4xl md:text-3xl font-bold my-4">
+              <span className="text-primary">Edit&nbsp;</span>
+              <span className="text-secondary">Your Profile</span>
             </h2>
+
             <img
               className="h-28 w-28 rounded-full border-4 border-[#e67a37] shadow-xl object-cover  mx-auto"
               src={photoURL ? photoURL : profilePhoto}
