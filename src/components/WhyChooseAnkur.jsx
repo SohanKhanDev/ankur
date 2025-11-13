@@ -42,7 +42,9 @@ const WhyChooseAnkur = () => {
         <div className="md:w-1/3">
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4 text-balance">
             <span className="text-primary"> Why </span>
-            <span className="text-secondary">Choose Ankur ?</span>
+            <span className="text-secondary">
+              Choose <br /> Ankur ?
+            </span>
           </h2>
         </div>
 
