@@ -14,7 +14,7 @@ const MyPostsPage = () => {
 
   /*** ----------*** :: FETCH => MY POSTS :: ***---------- ***/
   useEffect(() => {
-    fetch(`http://localhost:3000/myposts?email=${user.email}`)
+    fetch(`http://ankur-server-ten.vercel.app/myposts?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => setCrops(data))
       .catch((err) => console.error("Error fetching posts:", err));
@@ -41,21 +41,21 @@ const MyPostsPage = () => {
       location: form.location.value,
       image: form.image.value,
     };
-    console.log(updatedCrop);
 
-    fetch(`http://localhost:3000/crop/edit?cropid=${selectedCrop._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        updatedCrop,
-      }),
-    })
+    fetch(
+      `http://ankur-server-ten.vercel.app/crop/edit?cropid=${selectedCrop._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          updatedCrop,
+        }),
+      }
+    )
       .then((res) => res.json())
-      .then((data) => {
-        console.log("Crops updated:", data);
-      })
+      .then(() => {})
       .catch((error) => console.error("Error:", error));
 
     setCrops((prev) =>
@@ -65,7 +65,7 @@ const MyPostsPage = () => {
     setEditModalOpen(false);
   };
 
-  /*** ----------*** :: HANDLER => DELETE :: ***---------- ***/
+  /*** ----------*** :: HANDLER => CROP DELETE :: ***---------- ***/
   const handleDelete = (cropId) => {
     Swal.fire({
       title: "Are you sure?",
@@ -77,13 +77,26 @@ const MyPostsPage = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/crop/delete?cropid=${cropId}`, {
-          method: "DELETE",
-        })
+        fetch(
+          `http://ankur-server-ten.vercel.app/crop/delete?cropid=${cropId}`,
+          {
+            method: "DELETE",
+          }
+        )
           .then((res) => res.json())
-          .then((data) => {
-            console.log("Crops deleted:", data);
+          .then(() => {
+            /*** ----------*** :: HANDLER => CROP DELETE :: ***---------- ***/
+            fetch(
+              `http://ankur-server-ten.vercel.app/interests/delete?cropid=${cropId}`,
+              {
+                method: "DELETE",
+              }
+            )
+              .then((res) => res.json())
+              .then(() => {})
+              .catch((error) => console.error("Error:", error));
 
+            /*** ----------*** :: UI => INSTANT UPDATE :: ***---------- ***/
             setCrops((prev) => prev.filter((crop) => crop._id !== cropId));
           })
           .catch((error) => console.error("Error:", error));
@@ -96,6 +109,11 @@ const MyPostsPage = () => {
       }
     });
   };
+
+  /*** ----------*** :: TITLE SETUP :: ***---------- ***/
+  useEffect(() => {
+    document.title = "MY POSTS | ANKUR";
+  }, []);
 
   return (
     <div className="min-h-screen p-4 sm:p-6 md:p-8 lg:p-12 bg-gray-50">
@@ -119,11 +137,9 @@ const MyPostsPage = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-100 text-gray-700 text-xs sm:text-sm md:text-base uppercase font-semibold">
               <tr>
-                {/* Combined Photo + Name + Type */}
                 <th className="px-4 py-3 text-left">Crop</th>
                 <th className="px-4 py-3 text-center">Price</th>
                 <th className="px-4 py-3 text-center">Quantity</th>
-                {/* Location hidden on sm/md */}
                 <th className="px-4 py-3 text-center hidden lg:table-cell">
                   Location
                 </th>
@@ -134,7 +150,6 @@ const MyPostsPage = () => {
             <tbody className="divide-y divide-gray-200 text-gray-700">
               {crops.map((crop) => (
                 <tr key={crop._id} className="hover:bg-gray-50 transition">
-                  {/* Combined column */}
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
                       <img

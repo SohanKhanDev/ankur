@@ -35,11 +35,7 @@ const HomePage = () => {
         <WhyChooseAnkur />
       </div>
 
-      <div
-      // data-aos="fade-right"
-      // data-aos-duration="900"
-      // data-aos-easing="ease-out-cubic"
-      >
+      <div>
         <TestimonialsSlider />
       </div>
 

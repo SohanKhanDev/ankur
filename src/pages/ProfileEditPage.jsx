@@ -14,8 +14,7 @@ const ProfileEditPage = () => {
 
   const navigate = useNavigate();
 
-  const { displayName, photoURL, email } = user || {};
-  console.log(email);
+  const { displayName, photoURL } = user || {};
 
   /*** ----------*** :: HANDLER => UPDATE PROFILE  :: ***---------- ***/
   const handleUpdateProfile = (event) => {
@@ -38,7 +37,7 @@ const ProfileEditPage = () => {
         setActionLoading(false);
       });
 
-    fetch(`http://localhost:3000/users/edit?email=${user.email}`, {
+    fetch(`http://ankur-server-ten.vercel.app/users/edit?email=${user.email}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -49,9 +48,7 @@ const ProfileEditPage = () => {
       }),
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log("User updated:", data);
-      })
+      .then(() => {})
       .catch((error) => console.error("Error:", error));
   };
 
@@ -134,7 +131,7 @@ const ProfileEditPage = () => {
                       : "btn-main"
                   }`}
                 >
-                  {actionLoading ? "Updating..." : "SAVE CHANGES"}
+                  {actionLoading ? "Changing..." : "CHANGES"}
                 </button>
 
                 <Link

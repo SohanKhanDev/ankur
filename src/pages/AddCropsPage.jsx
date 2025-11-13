@@ -14,7 +14,7 @@ const AddCropsPage = () => {
 
   /*** ----------*** :: DB FETCH => UNITS :: ***---------- ***/
   useEffect(() => {
-    fetch(`http://localhost:3000/units`)
+    fetch(`http://ankur-server-ten.vercel.app/units`)
       .then((res) => res.json())
       .then((data) => {
         setUnits(data);
@@ -23,7 +23,7 @@ const AddCropsPage = () => {
 
   /*** ----------*** :: DB FETCH => CROP TYPES :: ***---------- ***/
   useEffect(() => {
-    fetch(`http://localhost:3000/crop-type`)
+    fetch(`http://ankur-server-ten.vercel.app/crop-type`)
       .then((res) => res.json())
       .then((data) => {
         setCropstypes(data);
@@ -56,14 +56,13 @@ const AddCropsPage = () => {
       createdAt: new Date(),
     };
 
-    fetch("http://localhost:3000/addcrop", {
+    fetch("http://ankur-server-ten.vercel.app/addcrop", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(cropData),
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         toast.success("🌾 Crop posted successfully!");
         form.reset();
         navigate("/myposts");
@@ -235,7 +234,7 @@ const AddCropsPage = () => {
                     htmlFor="location"
                     className="block text-sm font-semibold text-gray-700 mb-1"
                   >
-                    Farm/Storage Location
+                    Farm Location
                   </label>
                   <input
                     type="text"
@@ -268,7 +267,7 @@ const AddCropsPage = () => {
             </div>
           </section>
 
-          {/* ----------*** :: BTN => SUMIT :: ***---------- */}
+          {/* ----------*** :: BTN => SUBMIT :: ***---------- */}
           <button
             type="submit"
             disabled={actionLoading}

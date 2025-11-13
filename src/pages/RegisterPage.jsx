@@ -90,7 +90,7 @@ const RegisterPage = () => {
           image: result.user.photoURL,
         };
 
-        fetch("http://localhost:3000/users", {
+        fetch("http://ankur-server-ten.vercel.app/users", {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify(userInfo),
@@ -101,7 +101,6 @@ const RegisterPage = () => {
               toast.success("Welcome back! 🎉");
             } else {
               toast.success("Registration successful! Welcome to Ankur! 🎉");
-              console.log("after save:", data);
             }
           });
         navigate("/");
@@ -148,14 +147,13 @@ const RegisterPage = () => {
           image: user.photoURL,
         };
 
-        fetch("http://localhost:3000/users", {
+        fetch("http://ankur-server-ten.vercel.app/users", {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify(userInfo),
         })
           .then((res) => res.json())
-          .then((data) => {
-            console.log("after save:", data);
+          .then(() => {
             toast.success("Registration successful! Welcome to Ankur! 🎉");
           });
 
@@ -329,7 +327,7 @@ const RegisterPage = () => {
                 Already have an account?{" "}
                 <Link
                   to="/auth/login"
-                  className="font-medium text-[#d35507] hover:underline"
+                  className="font-medium text-secondary hover:underline"
                 >
                   Sign In
                 </Link>
@@ -357,7 +355,7 @@ const RegisterPage = () => {
           style={{ backgroundImage: `url(${imgage})` }}
         >
           <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 text-center shadow-md mt-90">
-            <h2 className="text-3xl font-bold mb-3 text-[#d35507]">
+            <h2 className="text-3xl font-bold mb-3 text-secondary">
               Welcome to Ankur
             </h2>
             <p className="text-base text-center max-w-sm leading-relaxed text-gray-600 mx-auto">

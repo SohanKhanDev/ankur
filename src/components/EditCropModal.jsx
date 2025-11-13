@@ -12,14 +12,14 @@ const EditCropModal = ({
 
   /*** ---------- FETCH UNITS ---------- ***/
   useEffect(() => {
-    fetch(`http://localhost:3000/units`)
+    fetch(`http://ankur-server-ten.vercel.app/units`)
       .then((res) => res.json())
       .then((data) => setUnits(data));
   }, []);
 
   /*** ---------- FETCH CROP TYPES ---------- ***/
   useEffect(() => {
-    fetch(`http://localhost:3000/crop-type`)
+    fetch(`http://ankur-server-ten.vercel.app/crop-type`)
       .then((res) => res.json())
       .then((data) => setCropTypes(data));
   }, []);

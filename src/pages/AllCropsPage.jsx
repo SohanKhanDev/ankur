@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router";
 import CropsCard from "../components/CropsCard";
 import { toast } from "react-toastify";
@@ -13,7 +13,7 @@ const AllCropsPage = () => {
     e.preventDefault();
     const searchText = e.target.search.value;
 
-    fetch(`http://localhost:3000/cropsSearch?search=${searchText}`)
+    fetch(`http://ankur-server-ten.vercel.app/cropsSearch?search=${searchText}`)
       .then((res) => res.json())
       .then((data) => {
         setCrops(data);
@@ -23,8 +23,13 @@ const AllCropsPage = () => {
       });
   };
 
+  /*** ----------*** :: TITLE SETUP :: ***---------- ***/
+  useEffect(() => {
+    document.title = "ALL CROPS | ANKUR";
+  }, []);
+
   return (
-    <div className="px-4">
+    <div className="px-4 min-h-screen">
       {/* ----------*** :: SEARCH BAR :: ***---------- */}
       <div className="flex justify-center my-12">
         <div className="w-full max-w-xl">
@@ -49,11 +54,27 @@ const AllCropsPage = () => {
       </div>
 
       {/* ----------*** :: MAPPING => CROPS :: ***---------- */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-3 lg:gap-6">
-        {crops.map((crop) => (
-          <CropsCard crop={crop} key={crop._id} />
-        ))}
-      </div>
+      {crops.length === 0 ? (
+        <div className="flex flex-col items-center justify-center min-h-[50vh] text-center">
+          <img
+            src="https://cdn.iconscout.com/icon/free/png-256/free-data-not-found-icon-svg-download-png-1662569.png"
+            alt="No crops found"
+            className="w-32 h-32 mb-4 opacity-80"
+          />
+          <h1 className="text-2xl font-semibold text-gray-700 mb-2">
+            No Crops Found
+          </h1>
+          <p className="text-gray-500">
+            It looks like there are no crops available right now.
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-3 lg:gap-6">
+          {crops.map((crop) => (
+            <CropsCard crop={crop} key={crop._id} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

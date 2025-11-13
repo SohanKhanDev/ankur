@@ -16,7 +16,7 @@ const CropsCard = ({ crop }) => {
       className="flex justify-center items-center p-3 sm:p-4"
     >
       <div className="w-full rounded-2xl overflow-hidden shadow-md bg-white transition-transform duration-300 hover:scale-[1.02] hover:shadow-xl">
-        {/* Image */}
+        {/* ----------*** :: CROPS PHOTO :: ***---------- */}
         <div className="relative h-48 sm:h-56 flex items-center justify-center overflow-hidden">
           <img
             src={image}
@@ -30,14 +30,13 @@ const CropsCard = ({ crop }) => {
           />
         </div>
 
-        {/* Content */}
         <div className="p-4 sm:p-6 bg-gray-50">
-          {/* Name */}
+          {/* ----------*** :: CROPS NAME :: ***---------- */}
           <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 capitalize truncate">
             {name}
           </h2>
 
-          {/* Tags */}
+          {/* ----------*** :: CROPS TAGS :: ***---------- */}
           <div className="flex flex-wrap gap-2 mb-4">
             <span className="flex items-center gap-1.5 px-3 py-1 text-xs font-medium bg-gray-200 text-gray-700 rounded-full capitalize">
               <BiSolidCategoryAlt size={14} /> {type}
@@ -50,14 +49,14 @@ const CropsCard = ({ crop }) => {
             </span>
           </div>
 
-          {/* Description */}
-          <p className="text-gray-600 mb-6 leading-relaxed text-sm sm:text-base line-clamp-3">
+          {/* ----------*** :: CROPS DESCRIPTION :: ***---------- */}
+          <p className="text-gray-600  min-h-20 mb-6 leading-relaxed text-sm sm:text-base line-clamp-3">
             {description}
           </p>
 
-          {/* Bottom */}
           <div className="flex justify-between items-center pt-4 border-t border-gray-200">
             <div>
+              {/* ----------*** :: CROPS UNIT PRICE :: ***---------- */}
               <p className="text-xs uppercase text-gray-500 font-medium">
                 Price / {unit}
               </p>
@@ -69,7 +68,7 @@ const CropsCard = ({ crop }) => {
               </p>
             </div>
 
-            {/* Button */}
+            {/* ----------*** :: BTN => DETAILS :: ***---------- */}
             <Link
               to={`/crops/${_id}`}
               className="px-4 py-2 rounded-lg bg-primary text-white font-semibold text-sm sm:text-base transition-colors duration-300 hover:bg-secondary"

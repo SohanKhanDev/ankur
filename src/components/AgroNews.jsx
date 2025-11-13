@@ -2,6 +2,7 @@ import React from "react";
 import { FaRegNewspaper } from "react-icons/fa";
 
 const AgroNews = () => {
+  /*** ----------*** :: VARIABLES :: ***---------- ***/
   const newsList = [
     {
       title: "Government Announces New Subsidy for Fertilizers",
@@ -31,20 +32,31 @@ const AgroNews = () => {
 
   return (
     <section className=" py-8 px-6">
-      <div className="text-center mb-12">
-        <h2 className="text-4xl sm:text-5xl font-bold  mb-4">
-          <span className="text-secondary"> Latest </span>{" "}
-          <span className="text-primary "> Agro News</span>
-        </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto mb-12">
-          Stay updated with the latest agricultural news, market insights, and
-          government initiatives to help you make better farming and trading
-          decisions.
-        </p>
+      {/* ----------*** :: LATEST CROPS TITLE :: ***---------- */}
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6 mb-6 sm:mb-8 md:mb-10 text-center md:text-left">
+        <div className="md:w-1/3">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4 text-balance">
+            <span className="text-primary"> Latest </span>
+            <span className="text-secondary">
+              {" "}
+              Agro <br />
+              News
+            </span>
+          </h2>
+        </div>
+
+        <div className="md:w-1/2 text-right">
+          <p className="text-gray-600 max-w-2xl mx-auto md:mx-0 mb-6 md:mb-0 text-sm sm:text-base md:text-lg leading-relaxed">
+            Stay updated with the latest agricultural news, market insights, and
+            government initiatives to help you make better farming and trading
+            decisions.
+          </p>
+        </div>
       </div>
 
-      {/* News Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      {/* ----------*** :: MAP => NEWS CARD :: ***---------- */}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8  mx-auto">
         {newsList.map((news, index) => (
           <div
             key={index}

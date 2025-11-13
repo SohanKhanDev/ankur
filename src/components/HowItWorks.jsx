@@ -8,6 +8,7 @@ import {
 import { Link } from "react-router";
 
 const HowItWorks = () => {
+  /*** ----------*** :: VARIABLES :: ***---------- ***/
   const steps = [
     {
       icon: <FaSeedling className="text-primary text-5xl mb-4" />,
@@ -36,19 +37,29 @@ const HowItWorks = () => {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-12 text-center">
-      {/* ----------*** :: HEADER :: ***---------- */}
-      <h1 className="text-4xl sm:text-5xl font-bold  mb-4">
-        <span className="text-primary">How</span>{" "}
-        <span className="text-secondary">Ankur Works</span>
-      </h1>
-      <p className="text-gray-600 max-w-2xl mx-auto mb-12">
-        Ankur simplifies agricultural trading by connecting farmers, traders,
-        and consumers on one digital platform. Here’s how our simple and
-        transparent process works:
-      </p>
+    <div className=" mx-auto px-6 py-12 text-center">
+      {/* ----------*** :: HOW IT WORKS TITLE :: ***---------- */}
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6 mb-6 sm:mb-8 md:mb-10 text-center md:text-left">
+        <div className="md:w-1/2">
+          <p className="text-gray-600 max-w-2xl mx-auto md:mx-0 mb-6 md:mb-0 text-sm sm:text-base md:text-lg leading-relaxed">
+            Ankur simplifies agricultural trading by connecting farmers,
+            traders, and consumers on one digital platform. Here's how our
+            simple and transparent process works:
+          </p>
+        </div>
 
-      {/* Steps Section */}
+        <div className="text-right md:w-1/3">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4 text-balance">
+            <span className="text-primary"> How </span>
+            <span className="text-secondary">
+              {" "}
+              Ankur <br /> Works
+            </span>
+          </h2>
+        </div>
+      </div>
+
+      {/* ----------*** :: WORK STEPS :: ***---------- */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {steps.map((step, index) => (
           <div
@@ -65,7 +76,6 @@ const HowItWorks = () => {
         ))}
       </div>
 
-      {/* CTA Section */}
       <div className="mt-16 bg-[#eef1e5] py-10 rounded-2xl">
         <h2 className="text-2xl sm:text-3xl font-semibold text-primary mb-4">
           Start Your Journey with Ankur

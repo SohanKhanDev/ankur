@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FaEye, FaTimes } from "react-icons/fa";
-import Swal from "sweetalert2";
 import { AuthContext } from "../providers/AuthProvide";
+import { Link } from "react-router";
 
 const MyInterestsPage = () => {
   /*** ----------*** :: HOOKS :: ***---------- ***/
@@ -10,22 +10,27 @@ const MyInterestsPage = () => {
 
   /*** ----------*** :: FETCH => MY INTERESTS :: ***---------- ***/
   useEffect(() => {
-    fetch(`http://localhost:3000/myinterests?email=${user.email}`)
+    fetch(`http://ankur-server-ten.vercel.app/myinterests?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => setInterests(data))
       .catch((err) => console.error("Error fetching interests:", err));
   }, [user]);
 
+  /*** ----------*** :: TITLE SETUP :: ***---------- ***/
+  useEffect(() => {
+    document.title = "MY INTEREST | ANKUR";
+  }, []);
+
   return (
     <div className="min-h-screen p-4 sm:p-6 md:p-8 lg:p-12 bg-gray-50">
-      {/* ---------- HEADER ---------- */}
+      {/* ----------*** :: TITLE :: ***---------- */}
       <div className="text-center mb-8 md:mb-12 border-b pb-4 md:pb-6 border-gray-100">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
           <span className="text-primary">My</span>{" "}
           <span className="text-secondary">Interests</span>
         </h1>
         <p className="text-gray-600 max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto mb-2 text-sm sm:text-base md:text-lg">
-          Track the status of all the interests you’ve sent to crop owners and
+          Track the status of all the interests you've sent to crop owners and
           manage your connections effectively.
         </p>
       </div>
@@ -39,11 +44,10 @@ const MyInterestsPage = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-100 text-gray-700 text-xs sm:text-sm md:text-base uppercase font-semibold text-center">
               <tr>
-                {/* Combined Photo + Crop Name */}
                 <th className="px-4 py-3">Crop</th>
                 <th className="px-4 py-3">Owner</th>
                 <th className="px-4 py-3">Quantity</th>
-                {/* Message hidden on sm/md */}
+
                 <th className="px-4 py-3 hidden lg:table-cell">Message</th>
                 <th className="px-4 py-3">Status</th>
               </tr>
@@ -57,9 +61,11 @@ const MyInterestsPage = () => {
                     key={interest._id}
                     className="hover:bg-gray-50 transition"
                   >
-                    {/* Combined column */}
                     <td className="px-4 py-3">
-                      <div className="flex flex-col items-center gap-2">
+                      <Link
+                        to={`/crops/${interest._id}`}
+                        className="flex flex-col items-center gap-2"
+                      >
                         <img
                           src={interest.image}
                           alt={interest.name}
@@ -67,13 +73,13 @@ const MyInterestsPage = () => {
                           onError={(e) => {
                             e.target.onerror = null;
                             e.target.src =
-                              "https://placehold.co/100x100/f3f4f6/374151?text=No+Image";
+                              "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg";
                           }}
                         />
                         <p className="font-semibold text-sm sm:text-base">
                           {interest.name}
                         </p>
-                      </div>
+                      </Link>
                     </td>
 
                     <td className="px-4 py-3 text-sm sm:text-base">
@@ -83,7 +89,6 @@ const MyInterestsPage = () => {
                       {interest.quantity} {interest.unit}
                     </td>
 
-                    {/* Message only visible on lg */}
                     <td className="px-4 py-3 text-sm sm:text-base whitespace-normal wrap-break-word max-w-[150px] sm:max-w-[250px] md:max-w-[350px] lg:max-w-[500px] hidden lg:table-cell">
                       {interest.interests[0].message}
                     </td>

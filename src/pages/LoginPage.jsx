@@ -57,8 +57,11 @@ const LoginPage = () => {
       /*** ----------*** :: GENERAL/NETWORK ERRORS :: ***---------- ***/
       customMessage =
         "A network error occurred. Please check your connection and try again. 📶";
+    } else if (errorCode === "auth/invalid-credential") {
+      /*** ----------*** :: INVILID CREDENTIAL ERRORS :: ***---------- ***/
+      customMessage = "Wrong email or password.";
     } else if (error?.message) {
-      customMessage = `An unexpected error occurred: ${error.message
+      customMessage = `An unexpected error occurred: ${error.code
         .split("(")[0]
         .trim()}. 😕`;
     }
@@ -79,7 +82,6 @@ const LoginPage = () => {
         const user = result.user;
         setUser(user);
         navigate(`${location.state ? location.state : "/"}`);
-        console.log(location.state);
 
         /*** ----------*** :: DB => POST USERS  :: ***---------- ***/
         const userInfo = {
@@ -88,15 +90,13 @@ const LoginPage = () => {
           image: result.user.photoURL,
         };
 
-        fetch("http://localhost:3000/users", {
+        fetch("http://ankur-server-ten.vercel.app/users", {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify(userInfo),
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log("after save:", data);
-
             if (data.message === "exists") {
               toast.success("Welcome back! 🎉");
             } else {
@@ -128,7 +128,8 @@ const LoginPage = () => {
         navigate(`${location.state ? location.state : "/"}`);
       })
       .catch((error) => {
-        toast.error(`Signin failed: ${error.message}`);
+        const customMessage = getCustomErrorMessage(error);
+        toast.error(`Sign-in failed: ${customMessage}`);
       })
       .finally(() => {
         setActionLoading(false);
@@ -163,7 +164,7 @@ const LoginPage = () => {
           }}
         >
           <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 text-center shadow-md mt-90">
-            <h2 className="text-3xl font-bold mb-3 text-[#2a875f]">
+            <h2 className="text-3xl font-bold mb-3 text-secondary">
               Welcome Back
             </h2>
 

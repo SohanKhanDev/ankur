@@ -30,7 +30,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
-        loader: () => fetch("http://localhost:3000/allcrops"),
+        loader: () => fetch("http://ankur-server-ten.vercel.app/allcrops"),
       },
 
       /*** ----------*** :: PAGE => PROFILE :: ***---------- ***/
@@ -57,7 +57,7 @@ const router = createBrowserRouter([
       {
         path: "/allcrops",
         element: <AllCropsPage />,
-        loader: () => fetch("http://localhost:3000/allCrops"),
+        loader: () => fetch("http://ankur-server-ten.vercel.app/allCrops"),
       },
 
       /*** ----------*** :: PAGE => CROPS DETAILS :: ***---------- ***/
@@ -69,7 +69,7 @@ const router = createBrowserRouter([
           </PrivateRouteProvider>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/crops/${params.id}`),
+          fetch(`http://ankur-server-ten.vercel.app/crops/${params.id}`),
       },
 
       /*** ----------*** :: PAGE => ADD CROPS :: ***---------- ***/

@@ -14,6 +14,9 @@ import CropInfo from "../components/CropInfo";
 import ExpressInterest from "../components/ExpressInterest";
 import InterestsTable from "../components/InterestsTable";
 
+import nodata from "../assets/no data.json";
+import Lottie from "lottie-react";
+
 const CropDetailsPage = () => {
   /*** ----------*** :: HOOKS :: ***---------- ***/
   const data = useLoaderData();
@@ -75,14 +78,13 @@ const CropDetailsPage = () => {
       totalPrice,
     };
 
-    fetch(`http://localhost:3000/interests/${_id}`, {
+    fetch(`http://ankur-server-ten.vercel.app/interests/${_id}`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(newInterest),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("after insert:", data);
         if (data.acknowledged) {
           toast.success("Interest Submitted!! 🎉");
           const addedInterest = {
@@ -110,18 +112,17 @@ const CropDetailsPage = () => {
       return toast.error(`Insufficient Stock!!`);
     }
 
-    fetch(`http://localhost:3000/interests/accept?interestId=${interestId}`, {
-      method: "PUT",
-    })
+    fetch(
+      `http://ankur-server-ten.vercel.app/interests/accept?interestId=${interestId}`,
+      {
+        method: "PUT",
+      }
+    )
       .then((res) => res.json())
-      .then((data) => {
-        console.log("Interest accepted:", data);
-
+      .then(() => {
         setCrop((prevCrop) => ({
           ...prevCrop,
-          // update stock
           quantity: prevCrop.quantity - interest.quantity,
-          // update interest status
           interests: prevCrop.interests.map((prev) =>
             prev._id === interestId ? { ...prev, status: "Accepted" } : prev
           ),
@@ -129,17 +130,17 @@ const CropDetailsPage = () => {
       })
       .catch((error) => console.error("Error:", error));
   };
-  console.log(user?.email, crop?.owner?.ownerEmail);
 
   /*** ----------*** :: HANDLER => INTEREST REJECT  :: ***---------- ***/
   const handleInterestReject = (interestId) => {
-    fetch(`http://localhost:3000/interests/reject?interestId=${interestId}`, {
-      method: "PUT",
-    })
+    fetch(
+      `http://ankur-server-ten.vercel.app/interests/reject?interestId=${interestId}`,
+      {
+        method: "PUT",
+      }
+    )
       .then((res) => res.json())
-      .then((data) => {
-        console.log("Interest rejected:", data);
-
+      .then(() => {
         setCrop((prevCrop) => ({
           ...prevCrop,
           interests: prevCrop.interests.map((prev) =>
@@ -157,7 +158,15 @@ const CropDetailsPage = () => {
     }
   }, [crop]);
 
-  console.log(crop);
+  if (!crop?._id) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <div className="w-full max-w-sm mx-auto flex justify-center items-center">
+          <Lottie animationData={nodata} loop={true} />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex justify-center bg-gray-50 min-h-screen p-8 font-sans">
@@ -202,6 +211,7 @@ const CropDetailsPage = () => {
 
         {/* ----------*** :: EXISTING INTERESTS (MIDDLE PART) :: ***---------- */}
         <InterestsTable
+          isOwner={isOwner}
           interests={crop?.interests}
           cropUnit={unit}
           handleInterestAccept={handleInterestAccept}

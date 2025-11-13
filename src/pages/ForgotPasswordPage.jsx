@@ -48,10 +48,10 @@ const ForgotPasswordPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-[#f5f5f5] to-[#eaeaea] p-4 sm:p-8">
-      <div className="flex w-full h-[800px] lg:h-[700px] max-w-6xl bg-white/80 backdrop-blur-md shadow-2xl rounded-xl overflow-hidden border border-gray-200">
+    <div className="min-h-screen flex items-center justify-center p-4 sm:p-8">
+      <div className="flex  h-[800px] lg:h-[700px] bg-white/80 backdrop-blur-md shadow-2xl rounded-xl overflow-hidden border border-gray-200">
         {/* ----------*** :: LEFT SIDE :: ***---------- */}
-        <div className="w-full lg:w-1/2 p-8 md:p-12 flex flex-col justify-center items-center">
+        <div className="  p-8 md:p-12 flex flex-col justify-center items-center">
           <div className="max-w-md w-full">
             <div className="mb-8 flex justify-center">
               <img src={logo} alt="Logo" className="w-20 h-auto sm:w-50" />
@@ -105,19 +105,6 @@ const ForgotPasswordPage = () => {
                 </Link>
               </div>
             </form>
-          </div>
-        </div>
-
-        {/* ----------*** :: RIGHT SIDE :: ***---------- */}
-        <div className="hidden lg:flex w-1/2 p-12 flex-col justify-center items-center text-white relative overflow-hidden rounded-r-xl bg-linear-to-r from-[#f2ac27] to-[#e67a37]">
-          <div className="relative z-10 text-center animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Lost Your Key?
-            </h2>
-            <p className="text-lg mb-8 max-w-xs leading-relaxed">
-              No worries! We'll help you get back into your account quickly and
-              securely.
-            </p>
           </div>
         </div>
       </div>
